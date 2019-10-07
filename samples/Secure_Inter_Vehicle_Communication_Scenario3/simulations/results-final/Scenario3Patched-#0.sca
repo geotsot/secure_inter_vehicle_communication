@@ -1,0 +1,374 @@
+version 2
+run Scenario3Patched-0-20180429-00:57:24-9508
+attr configname Scenario3Patched
+attr datetime 20180429-00:57:24
+attr experiment Scenario3Patched
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvarsf ""
+attr measurement ""
+attr network HighwayScenario3
+attr processid 9508
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+param *.attackerNode[*].applType "\"AttackerAppLayer_Sybil\""
+param *.normal_carNode[*].applType "\"NormalAppLayer_Secure\""
+param *.normal_carNode[*].appl.headerLength "80 bit"
+param *.normal_carNode[*].appl.sendBeacons true
+param *.normal_carNode[*].appl.dataOnSch false
+param *.normal_carNode[*].appl.beaconInterval 0.1s
+param *.node[*].applType "\"NormalAppLayer_Secure\""
+param *.node[*].appl.headerLength "80 bit"
+param *.node[*].appl.sendBeacons true
+param *.node[*].appl.dataOnSch false
+param *.node[*].appl.beaconInterval 0.1s
+param **.debug false
+param **.coreDebug false
+param *.playgroundSizeX 5500m
+param *.playgroundSizeY 500m
+param *.playgroundSizeZ 50m
+param *.annotations.draw false
+param *.obstacles.debug false
+param *.manager.updateInterval 0.1s
+param *.manager.host "\"localhost\""
+param *.manager.port 9999
+param *.manager.autoShutdown true
+param *.manager.launchConfig "xmldoc(\"highway.launchd.xml\")"
+param *.connectionManager.sendDirect true
+param *.connectionManager.maxInterfDist 2600m
+param *.connectionManager.drawMaxIntfDist false
+param *.**.nic.mac1609_4.useServiceChannel false
+param *.**.nic.mac1609_4.txPower 20mW
+param *.**.nic.mac1609_4.bitrate 6Mbps
+param *.**.nic.phy80211p.sensitivity -89dBm
+param *.**.nic.phy80211p.useThermalNoise true
+param *.**.nic.phy80211p.thermalNoise -110dBm
+param *.**.nic.phy80211p.decider "xmldoc(\"config.xml\")"
+param *.**.nic.phy80211p.analogueModels "xmldoc(\"config.xml\")"
+param *.**.nic.phy80211p.usePropagationDelay true
+param *.**.nic.phy80211p.antenna "xmldoc(\"antenna.xml\", \"/root/Antenna[@id='monopole']\")"
+param *.manager.moduleType "\"attacker=org.car2x.veins.nodes.Car normal_car=org.car2x.veins.nodes.Car *=org.car2x.veins.nodes.Car\""
+param *.manager.moduleName "\"attacker=attackerNode normal_car=normal_carNode *=node\""
+param *.node[*].veinsmobilityType.debug true
+param *.node[*].veinsmobility.x 0
+param *.node[*].veinsmobility.y 0
+param *.node[*].veinsmobility.z 1.895
+param *.attackerNode[*].veinsmobilityType.debug true
+param *.attackerNode[*].veinsmobility.x 0
+param *.attackerNode[*].veinsmobility.y 0
+param *.attackerNode[*].veinsmobility.z 1.895
+param *.normal_carNode[*].veinsmobilityType.debug true
+param *.normal_carNode[*].veinsmobility.x 0
+param *.normal_carNode[*].veinsmobility.y 0
+param *.normal_carNode[*].veinsmobility.z 1.895
+
+scalar HighwayScenario3.normal_carNode[0].appl generatedWSMs 0
+scalar HighwayScenario3.normal_carNode[0].appl receivedWSMs 0
+scalar HighwayScenario3.normal_carNode[0].appl generatedBSMs 1468
+scalar HighwayScenario3.normal_carNode[0].appl receivedBSMs 3844
+scalar HighwayScenario3.normal_carNode[0].appl generatedWSAs 0
+scalar HighwayScenario3.normal_carNode[0].appl receivedWSAs 0
+scalar HighwayScenario3.normal_carNode[0].appl delayBSM_P1 0.00011196151590843
+scalar HighwayScenario3.normal_carNode[0].appl delayBSM_P2 0
+scalar HighwayScenario3.normal_carNode[0].nic.phy80211p busyTime 0.0027232697547683
+scalar HighwayScenario3.normal_carNode[0].nic.mac1609_4 ReceivedUnicastPackets 0
+scalar HighwayScenario3.normal_carNode[0].nic.mac1609_4 ReceivedBroadcasts 3844
+scalar HighwayScenario3.normal_carNode[0].nic.mac1609_4 SentPackets 1468
+scalar HighwayScenario3.normal_carNode[0].nic.mac1609_4 SNIRLostPackets 0
+scalar HighwayScenario3.normal_carNode[0].nic.mac1609_4 RXTXLostPackets 0
+scalar HighwayScenario3.normal_carNode[0].nic.mac1609_4 TotalLostPackets 0
+scalar HighwayScenario3.normal_carNode[0].nic.mac1609_4 DroppedPacketsInMac 0
+scalar HighwayScenario3.normal_carNode[0].nic.mac1609_4 TooLittleTime 0
+scalar HighwayScenario3.normal_carNode[0].nic.mac1609_4 TimesIntoBackoff 1468
+scalar HighwayScenario3.normal_carNode[0].nic.mac1609_4 SlotsBackoff 2242
+scalar HighwayScenario3.normal_carNode[0].nic.mac1609_4 NumInternalContention 0
+scalar HighwayScenario3.normal_carNode[0].nic.mac1609_4 totalBusyTime 0.553916
+scalar HighwayScenario3.normal_carNode[0].veinsmobility startTime 0.1
+scalar HighwayScenario3.normal_carNode[0].veinsmobility totalTime 146.7
+scalar HighwayScenario3.normal_carNode[0].veinsmobility stopTime 146.9
+scalar HighwayScenario3.normal_carNode[0].veinsmobility minSpeed 33.971561954435
+scalar HighwayScenario3.normal_carNode[0].veinsmobility maxSpeed 34.096464784109
+scalar HighwayScenario3.normal_carNode[0].veinsmobility totalDistance 4992.8507841949
+scalar HighwayScenario3.normal_carNode[0].veinsmobility totalCO2Emission 942.0746966552
+scalar HighwayScenario3.normal_carNode[1].appl generatedWSMs 0
+scalar HighwayScenario3.normal_carNode[1].appl receivedWSMs 0
+scalar HighwayScenario3.normal_carNode[1].appl generatedBSMs 1471
+scalar HighwayScenario3.normal_carNode[1].appl receivedBSMs 4972
+scalar HighwayScenario3.normal_carNode[1].appl generatedWSAs 0
+scalar HighwayScenario3.normal_carNode[1].appl receivedWSAs 0
+scalar HighwayScenario3.normal_carNode[1].appl delayBSM_P1 0.00011202315045253
+scalar HighwayScenario3.normal_carNode[1].appl delayBSM_P2 0
+scalar HighwayScenario3.normal_carNode[1].nic.phy80211p busyTime 0.0035152141400406
+scalar HighwayScenario3.normal_carNode[1].nic.mac1609_4 ReceivedUnicastPackets 0
+scalar HighwayScenario3.normal_carNode[1].nic.mac1609_4 ReceivedBroadcasts 4972
+scalar HighwayScenario3.normal_carNode[1].nic.mac1609_4 SentPackets 1471
+scalar HighwayScenario3.normal_carNode[1].nic.mac1609_4 SNIRLostPackets 0
+scalar HighwayScenario3.normal_carNode[1].nic.mac1609_4 RXTXLostPackets 0
+scalar HighwayScenario3.normal_carNode[1].nic.mac1609_4 TotalLostPackets 0
+scalar HighwayScenario3.normal_carNode[1].nic.mac1609_4 DroppedPacketsInMac 0
+scalar HighwayScenario3.normal_carNode[1].nic.mac1609_4 TooLittleTime 0
+scalar HighwayScenario3.normal_carNode[1].nic.mac1609_4 TimesIntoBackoff 1471
+scalar HighwayScenario3.normal_carNode[1].nic.mac1609_4 SlotsBackoff 2203
+scalar HighwayScenario3.normal_carNode[1].nic.mac1609_4 NumInternalContention 0
+scalar HighwayScenario3.normal_carNode[1].nic.mac1609_4 totalBusyTime 0.671543
+scalar HighwayScenario3.normal_carNode[1].veinsmobility startTime 2.3
+scalar HighwayScenario3.normal_carNode[1].veinsmobility totalTime 147
+scalar HighwayScenario3.normal_carNode[1].veinsmobility stopTime 149.4
+scalar HighwayScenario3.normal_carNode[1].veinsmobility minSpeed 33.913415354219
+scalar HighwayScenario3.normal_carNode[1].veinsmobility maxSpeed 34.038308782773
+scalar HighwayScenario3.normal_carNode[1].veinsmobility totalDistance 4995.825998299
+scalar HighwayScenario3.normal_carNode[1].veinsmobility totalCO2Emission 938.83735742742
+scalar HighwayScenario3.normal_carNode[2].appl generatedWSMs 0
+scalar HighwayScenario3.normal_carNode[2].appl receivedWSMs 0
+scalar HighwayScenario3.normal_carNode[2].appl generatedBSMs 1481
+scalar HighwayScenario3.normal_carNode[2].appl receivedBSMs 6623
+scalar HighwayScenario3.normal_carNode[2].appl generatedWSAs 0
+scalar HighwayScenario3.normal_carNode[2].appl receivedWSAs 0
+scalar HighwayScenario3.normal_carNode[2].appl delayBSM_P1 0.00011214642371252
+scalar HighwayScenario3.normal_carNode[2].appl delayBSM_P2 0
+scalar HighwayScenario3.normal_carNode[2].nic.phy80211p busyTime 0.0046508575286966
+scalar HighwayScenario3.normal_carNode[2].nic.mac1609_4 ReceivedUnicastPackets 0
+scalar HighwayScenario3.normal_carNode[2].nic.mac1609_4 ReceivedBroadcasts 6623
+scalar HighwayScenario3.normal_carNode[2].nic.mac1609_4 SentPackets 1481
+scalar HighwayScenario3.normal_carNode[2].nic.mac1609_4 SNIRLostPackets 0
+scalar HighwayScenario3.normal_carNode[2].nic.mac1609_4 RXTXLostPackets 0
+scalar HighwayScenario3.normal_carNode[2].nic.mac1609_4 TotalLostPackets 0
+scalar HighwayScenario3.normal_carNode[2].nic.mac1609_4 DroppedPacketsInMac 0
+scalar HighwayScenario3.normal_carNode[2].nic.mac1609_4 TooLittleTime 0
+scalar HighwayScenario3.normal_carNode[2].nic.mac1609_4 TimesIntoBackoff 1481
+scalar HighwayScenario3.normal_carNode[2].nic.mac1609_4 SlotsBackoff 2222
+scalar HighwayScenario3.normal_carNode[2].nic.mac1609_4 NumInternalContention 0
+scalar HighwayScenario3.normal_carNode[2].nic.mac1609_4 totalBusyTime 0.844297
+scalar HighwayScenario3.normal_carNode[2].veinsmobility startTime 4.5
+scalar HighwayScenario3.normal_carNode[2].veinsmobility totalTime 148
+scalar HighwayScenario3.normal_carNode[2].veinsmobility stopTime 152.6
+scalar HighwayScenario3.normal_carNode[2].veinsmobility minSpeed 33.673764060628
+scalar HighwayScenario3.normal_carNode[2].veinsmobility maxSpeed 33.798672426927
+scalar HighwayScenario3.normal_carNode[2].veinsmobility totalDistance 4992.8437246633
+scalar HighwayScenario3.normal_carNode[2].veinsmobility totalCO2Emission 935.78228597407
+scalar HighwayScenario3.normal_carNode[3].appl generatedWSMs 0
+scalar HighwayScenario3.normal_carNode[3].appl receivedWSMs 0
+scalar HighwayScenario3.normal_carNode[3].appl generatedBSMs 1607
+scalar HighwayScenario3.normal_carNode[3].appl receivedBSMs 18613
+scalar HighwayScenario3.normal_carNode[3].appl generatedWSAs 0
+scalar HighwayScenario3.normal_carNode[3].appl receivedWSAs 0
+scalar HighwayScenario3.normal_carNode[3].appl delayBSM_P1 0.00013108059733159
+scalar HighwayScenario3.normal_carNode[3].appl delayBSM_P2 0
+scalar HighwayScenario3.normal_carNode[3].nic.phy80211p busyTime 0.012045749844436
+scalar HighwayScenario3.normal_carNode[3].nic.mac1609_4 ReceivedUnicastPackets 0
+scalar HighwayScenario3.normal_carNode[3].nic.mac1609_4 ReceivedBroadcasts 18613
+scalar HighwayScenario3.normal_carNode[3].nic.mac1609_4 SentPackets 1607
+scalar HighwayScenario3.normal_carNode[3].nic.mac1609_4 SNIRLostPackets 0
+scalar HighwayScenario3.normal_carNode[3].nic.mac1609_4 RXTXLostPackets 0
+scalar HighwayScenario3.normal_carNode[3].nic.mac1609_4 TotalLostPackets 0
+scalar HighwayScenario3.normal_carNode[3].nic.mac1609_4 DroppedPacketsInMac 0
+scalar HighwayScenario3.normal_carNode[3].nic.mac1609_4 TooLittleTime 0
+scalar HighwayScenario3.normal_carNode[3].nic.mac1609_4 TimesIntoBackoff 1607
+scalar HighwayScenario3.normal_carNode[3].nic.mac1609_4 SlotsBackoff 2432
+scalar HighwayScenario3.normal_carNode[3].nic.mac1609_4 NumInternalContention 0
+scalar HighwayScenario3.normal_carNode[3].nic.mac1609_4 totalBusyTime 2.104487
+scalar HighwayScenario3.normal_carNode[3].veinsmobility startTime 6.7
+scalar HighwayScenario3.normal_carNode[3].veinsmobility totalTime 160.6
+scalar HighwayScenario3.normal_carNode[3].veinsmobility stopTime 167.4
+scalar HighwayScenario3.normal_carNode[3].veinsmobility minSpeed 31.021695450207
+scalar HighwayScenario3.normal_carNode[3].veinsmobility maxSpeed 31.14668656699
+scalar HighwayScenario3.normal_carNode[3].veinsmobility totalDistance 4993.3957354298
+scalar HighwayScenario3.normal_carNode[3].veinsmobility totalCO2Emission 883.93140922042
+scalar HighwayScenario3.normal_carNode[5].appl generatedWSMs 0
+scalar HighwayScenario3.normal_carNode[5].appl receivedWSMs 0
+scalar HighwayScenario3.normal_carNode[5].appl generatedBSMs 1568
+scalar HighwayScenario3.normal_carNode[5].appl receivedBSMs 18788
+scalar HighwayScenario3.normal_carNode[5].appl generatedWSAs 0
+scalar HighwayScenario3.normal_carNode[5].appl receivedWSAs 0
+scalar HighwayScenario3.normal_carNode[5].appl delayBSM_P1 0.00013391354616856
+scalar HighwayScenario3.normal_carNode[5].appl delayBSM_P2 0
+scalar HighwayScenario3.normal_carNode[5].nic.phy80211p busyTime 0.012461428571434
+scalar HighwayScenario3.normal_carNode[5].nic.mac1609_4 ReceivedUnicastPackets 0
+scalar HighwayScenario3.normal_carNode[5].nic.mac1609_4 ReceivedBroadcasts 18788
+scalar HighwayScenario3.normal_carNode[5].nic.mac1609_4 SentPackets 1568
+scalar HighwayScenario3.normal_carNode[5].nic.mac1609_4 SNIRLostPackets 0
+scalar HighwayScenario3.normal_carNode[5].nic.mac1609_4 RXTXLostPackets 0
+scalar HighwayScenario3.normal_carNode[5].nic.mac1609_4 TotalLostPackets 0
+scalar HighwayScenario3.normal_carNode[5].nic.mac1609_4 DroppedPacketsInMac 0
+scalar HighwayScenario3.normal_carNode[5].nic.mac1609_4 TooLittleTime 0
+scalar HighwayScenario3.normal_carNode[5].nic.mac1609_4 TimesIntoBackoff 1568
+scalar HighwayScenario3.normal_carNode[5].nic.mac1609_4 SlotsBackoff 2300
+scalar HighwayScenario3.normal_carNode[5].nic.mac1609_4 NumInternalContention 0
+scalar HighwayScenario3.normal_carNode[5].nic.mac1609_4 totalBusyTime 2.118592
+scalar HighwayScenario3.normal_carNode[5].veinsmobility startTime 11.1
+scalar HighwayScenario3.normal_carNode[5].veinsmobility totalTime 156.7
+scalar HighwayScenario3.normal_carNode[5].veinsmobility stopTime 167.9
+scalar HighwayScenario3.normal_carNode[5].veinsmobility minSpeed 30.260536251656
+scalar HighwayScenario3.normal_carNode[5].veinsmobility maxSpeed 31.92900579196
+scalar HighwayScenario3.normal_carNode[5].veinsmobility totalDistance 4992.6379215628
+scalar HighwayScenario3.normal_carNode[5].veinsmobility totalCO2Emission 902.90466910703
+scalar HighwayScenario3.normal_carNode[6].appl generatedWSMs 0
+scalar HighwayScenario3.normal_carNode[6].appl receivedWSMs 0
+scalar HighwayScenario3.normal_carNode[6].appl generatedBSMs 1557
+scalar HighwayScenario3.normal_carNode[6].appl receivedBSMs 18264
+scalar HighwayScenario3.normal_carNode[6].appl generatedWSAs 0
+scalar HighwayScenario3.normal_carNode[6].appl receivedWSAs 0
+scalar HighwayScenario3.normal_carNode[6].appl delayBSM_P1 0.00013451829696857
+scalar HighwayScenario3.normal_carNode[6].appl delayBSM_P2 0
+scalar HighwayScenario3.normal_carNode[6].nic.phy80211p busyTime 0.012199460500969
+scalar HighwayScenario3.normal_carNode[6].nic.mac1609_4 ReceivedUnicastPackets 0
+scalar HighwayScenario3.normal_carNode[6].nic.mac1609_4 ReceivedBroadcasts 18264
+scalar HighwayScenario3.normal_carNode[6].nic.mac1609_4 SentPackets 1557
+scalar HighwayScenario3.normal_carNode[6].nic.mac1609_4 SNIRLostPackets 0
+scalar HighwayScenario3.normal_carNode[6].nic.mac1609_4 RXTXLostPackets 0
+scalar HighwayScenario3.normal_carNode[6].nic.mac1609_4 TotalLostPackets 0
+scalar HighwayScenario3.normal_carNode[6].nic.mac1609_4 DroppedPacketsInMac 0
+scalar HighwayScenario3.normal_carNode[6].nic.mac1609_4 TooLittleTime 0
+scalar HighwayScenario3.normal_carNode[6].nic.mac1609_4 TimesIntoBackoff 1557
+scalar HighwayScenario3.normal_carNode[6].nic.mac1609_4 SlotsBackoff 2416
+scalar HighwayScenario3.normal_carNode[6].nic.mac1609_4 NumInternalContention 0
+scalar HighwayScenario3.normal_carNode[6].nic.mac1609_4 totalBusyTime 2.062941
+scalar HighwayScenario3.normal_carNode[6].veinsmobility startTime 13.3
+scalar HighwayScenario3.normal_carNode[6].veinsmobility totalTime 155.6
+scalar HighwayScenario3.normal_carNode[6].veinsmobility stopTime 169
+scalar HighwayScenario3.normal_carNode[6].veinsmobility minSpeed 20.876176977817
+scalar HighwayScenario3.normal_carNode[6].veinsmobility maxSpeed 36.065802231867
+scalar HighwayScenario3.normal_carNode[6].veinsmobility totalDistance 4997.2233028945
+scalar HighwayScenario3.normal_carNode[6].veinsmobility totalCO2Emission 1100.3391293704
+scalar HighwayScenario3.normal_carNode[9].appl generatedWSMs 0
+scalar HighwayScenario3.normal_carNode[9].appl receivedWSMs 0
+scalar HighwayScenario3.normal_carNode[9].appl generatedBSMs 1494
+scalar HighwayScenario3.normal_carNode[9].appl receivedBSMs 17008
+scalar HighwayScenario3.normal_carNode[9].appl generatedWSAs 0
+scalar HighwayScenario3.normal_carNode[9].appl receivedWSAs 0
+scalar HighwayScenario3.normal_carNode[9].appl delayBSM_P1 0.00013599057691522
+scalar HighwayScenario3.normal_carNode[9].appl delayBSM_P2 0
+scalar HighwayScenario3.normal_carNode[9].nic.phy80211p busyTime 0.011839571619817
+scalar HighwayScenario3.normal_carNode[9].nic.mac1609_4 ReceivedUnicastPackets 0
+scalar HighwayScenario3.normal_carNode[9].nic.mac1609_4 ReceivedBroadcasts 17008
+scalar HighwayScenario3.normal_carNode[9].nic.mac1609_4 SentPackets 1494
+scalar HighwayScenario3.normal_carNode[9].nic.mac1609_4 SNIRLostPackets 0
+scalar HighwayScenario3.normal_carNode[9].nic.mac1609_4 RXTXLostPackets 0
+scalar HighwayScenario3.normal_carNode[9].nic.mac1609_4 TotalLostPackets 0
+scalar HighwayScenario3.normal_carNode[9].nic.mac1609_4 DroppedPacketsInMac 0
+scalar HighwayScenario3.normal_carNode[9].nic.mac1609_4 TooLittleTime 0
+scalar HighwayScenario3.normal_carNode[9].nic.mac1609_4 TimesIntoBackoff 1494
+scalar HighwayScenario3.normal_carNode[9].nic.mac1609_4 SlotsBackoff 2234
+scalar HighwayScenario3.normal_carNode[9].nic.mac1609_4 NumInternalContention 0
+scalar HighwayScenario3.normal_carNode[9].nic.mac1609_4 totalBusyTime 1.925702
+scalar HighwayScenario3.normal_carNode[9].veinsmobility startTime 19.9
+scalar HighwayScenario3.normal_carNode[9].veinsmobility totalTime 149.3
+scalar HighwayScenario3.normal_carNode[9].veinsmobility stopTime 169.3
+scalar HighwayScenario3.normal_carNode[9].veinsmobility minSpeed 29.292526813689
+scalar HighwayScenario3.normal_carNode[9].veinsmobility maxSpeed 33.716643539866
+scalar HighwayScenario3.normal_carNode[9].veinsmobility totalDistance 4994.5259247407
+scalar HighwayScenario3.normal_carNode[9].veinsmobility totalCO2Emission 972.00956694723
+scalar HighwayScenario3.attackerNode[10].appl generatedWSMs 0
+scalar HighwayScenario3.attackerNode[10].appl receivedWSMs 0
+scalar HighwayScenario3.attackerNode[10].appl generatedBSMs 8129
+scalar HighwayScenario3.attackerNode[10].appl receivedBSMs 10103
+scalar HighwayScenario3.attackerNode[10].appl generatedWSAs 0
+scalar HighwayScenario3.attackerNode[10].appl receivedWSAs 0
+scalar HighwayScenario3.attackerNode[10].nic.phy80211p busyTime 0.0070850438300741
+scalar HighwayScenario3.attackerNode[10].nic.mac1609_4 ReceivedUnicastPackets 0
+scalar HighwayScenario3.attackerNode[10].nic.mac1609_4 ReceivedBroadcasts 10103
+scalar HighwayScenario3.attackerNode[10].nic.mac1609_4 SentPackets 8129
+scalar HighwayScenario3.attackerNode[10].nic.mac1609_4 SNIRLostPackets 0
+scalar HighwayScenario3.attackerNode[10].nic.mac1609_4 RXTXLostPackets 0
+scalar HighwayScenario3.attackerNode[10].nic.mac1609_4 TotalLostPackets 0
+scalar HighwayScenario3.attackerNode[10].nic.mac1609_4 DroppedPacketsInMac 0
+scalar HighwayScenario3.attackerNode[10].nic.mac1609_4 TooLittleTime 0
+scalar HighwayScenario3.attackerNode[10].nic.mac1609_4 TimesIntoBackoff 8129
+scalar HighwayScenario3.attackerNode[10].nic.mac1609_4 SlotsBackoff 12231
+scalar HighwayScenario3.attackerNode[10].nic.mac1609_4 NumInternalContention 0
+scalar HighwayScenario3.attackerNode[10].nic.mac1609_4 totalBusyTime 1.904257
+scalar HighwayScenario3.attackerNode[10].veinsmobility startTime 22.1
+scalar HighwayScenario3.attackerNode[10].veinsmobility totalTime 148.2
+scalar HighwayScenario3.attackerNode[10].veinsmobility stopTime 170.4
+scalar HighwayScenario3.attackerNode[10].veinsmobility minSpeed 29.885927419061
+scalar HighwayScenario3.attackerNode[10].veinsmobility maxSpeed 40.642318512015
+scalar HighwayScenario3.attackerNode[10].veinsmobility totalDistance 5002.8840164298
+scalar HighwayScenario3.attackerNode[10].veinsmobility totalCO2Emission 1362.177657203
+scalar HighwayScenario3.normal_carNode[7].appl generatedWSMs 0
+scalar HighwayScenario3.normal_carNode[7].appl receivedWSMs 0
+scalar HighwayScenario3.normal_carNode[7].appl generatedBSMs 1584
+scalar HighwayScenario3.normal_carNode[7].appl receivedBSMs 17482
+scalar HighwayScenario3.normal_carNode[7].appl generatedWSAs 0
+scalar HighwayScenario3.normal_carNode[7].appl receivedWSAs 0
+scalar HighwayScenario3.normal_carNode[7].appl delayBSM_P1 0.00013541964256979
+scalar HighwayScenario3.normal_carNode[7].appl delayBSM_P2 0
+scalar HighwayScenario3.normal_carNode[7].nic.phy80211p busyTime 0.011478080808086
+scalar HighwayScenario3.normal_carNode[7].nic.mac1609_4 ReceivedUnicastPackets 0
+scalar HighwayScenario3.normal_carNode[7].nic.mac1609_4 ReceivedBroadcasts 17482
+scalar HighwayScenario3.normal_carNode[7].nic.mac1609_4 SentPackets 1584
+scalar HighwayScenario3.normal_carNode[7].nic.mac1609_4 SNIRLostPackets 0
+scalar HighwayScenario3.normal_carNode[7].nic.mac1609_4 RXTXLostPackets 0
+scalar HighwayScenario3.normal_carNode[7].nic.mac1609_4 TotalLostPackets 0
+scalar HighwayScenario3.normal_carNode[7].nic.mac1609_4 DroppedPacketsInMac 0
+scalar HighwayScenario3.normal_carNode[7].nic.mac1609_4 TooLittleTime 0
+scalar HighwayScenario3.normal_carNode[7].nic.mac1609_4 TimesIntoBackoff 1584
+scalar HighwayScenario3.normal_carNode[7].nic.mac1609_4 SlotsBackoff 2339
+scalar HighwayScenario3.normal_carNode[7].nic.mac1609_4 NumInternalContention 0
+scalar HighwayScenario3.normal_carNode[7].nic.mac1609_4 totalBusyTime 1.984448
+scalar HighwayScenario3.normal_carNode[7].veinsmobility startTime 15.5
+scalar HighwayScenario3.normal_carNode[7].veinsmobility totalTime 158.3
+scalar HighwayScenario3.normal_carNode[7].veinsmobility stopTime 173.9
+scalar HighwayScenario3.normal_carNode[7].veinsmobility minSpeed 27.535598722676
+scalar HighwayScenario3.normal_carNode[7].veinsmobility maxSpeed 31.839424010084
+scalar HighwayScenario3.normal_carNode[7].veinsmobility totalDistance 4997.3455296386
+scalar HighwayScenario3.normal_carNode[7].veinsmobility totalCO2Emission 918.20360898631
+scalar HighwayScenario3.normal_carNode[4].appl generatedWSMs 0
+scalar HighwayScenario3.normal_carNode[4].appl receivedWSMs 0
+scalar HighwayScenario3.normal_carNode[4].appl generatedBSMs 1656
+scalar HighwayScenario3.normal_carNode[4].appl receivedBSMs 18991
+scalar HighwayScenario3.normal_carNode[4].appl generatedWSAs 0
+scalar HighwayScenario3.normal_carNode[4].appl receivedWSAs 0
+scalar HighwayScenario3.normal_carNode[4].appl delayBSM_P1 0.00013362802914791
+scalar HighwayScenario3.normal_carNode[4].appl delayBSM_P2 0
+scalar HighwayScenario3.normal_carNode[4].nic.phy80211p busyTime 0.011926714975851
+scalar HighwayScenario3.normal_carNode[4].nic.mac1609_4 ReceivedUnicastPackets 0
+scalar HighwayScenario3.normal_carNode[4].nic.mac1609_4 ReceivedBroadcasts 18991
+scalar HighwayScenario3.normal_carNode[4].nic.mac1609_4 SentPackets 1656
+scalar HighwayScenario3.normal_carNode[4].nic.mac1609_4 SNIRLostPackets 0
+scalar HighwayScenario3.normal_carNode[4].nic.mac1609_4 RXTXLostPackets 0
+scalar HighwayScenario3.normal_carNode[4].nic.mac1609_4 TotalLostPackets 0
+scalar HighwayScenario3.normal_carNode[4].nic.mac1609_4 DroppedPacketsInMac 0
+scalar HighwayScenario3.normal_carNode[4].nic.mac1609_4 TooLittleTime 0
+scalar HighwayScenario3.normal_carNode[4].nic.mac1609_4 TimesIntoBackoff 1656
+scalar HighwayScenario3.normal_carNode[4].nic.mac1609_4 SlotsBackoff 2590
+scalar HighwayScenario3.normal_carNode[4].nic.mac1609_4 NumInternalContention 0
+scalar HighwayScenario3.normal_carNode[4].nic.mac1609_4 totalBusyTime 2.148944
+scalar HighwayScenario3.normal_carNode[4].veinsmobility startTime 8.9
+scalar HighwayScenario3.normal_carNode[4].veinsmobility totalTime 165.5
+scalar HighwayScenario3.normal_carNode[4].veinsmobility stopTime 174.5
+scalar HighwayScenario3.normal_carNode[4].veinsmobility minSpeed 18.359503013114
+scalar HighwayScenario3.normal_carNode[4].veinsmobility maxSpeed 30.554182526641
+scalar HighwayScenario3.normal_carNode[4].veinsmobility totalDistance 4993.9120319999
+scalar HighwayScenario3.normal_carNode[4].veinsmobility totalCO2Emission 955.04803011354
+scalar HighwayScenario3.normal_carNode[8].appl generatedWSMs 0
+scalar HighwayScenario3.normal_carNode[8].appl receivedWSMs 0
+scalar HighwayScenario3.normal_carNode[8].appl generatedBSMs 1629
+scalar HighwayScenario3.normal_carNode[8].appl receivedBSMs 17155
+scalar HighwayScenario3.normal_carNode[8].appl generatedWSAs 0
+scalar HighwayScenario3.normal_carNode[8].appl receivedWSAs 0
+scalar HighwayScenario3.normal_carNode[8].appl delayBSM_P1 0.000136090736535
+scalar HighwayScenario3.normal_carNode[8].appl delayBSM_P2 0
+scalar HighwayScenario3.normal_carNode[8].nic.phy80211p busyTime 0.010952240638433
+scalar HighwayScenario3.normal_carNode[8].nic.mac1609_4 ReceivedUnicastPackets 0
+scalar HighwayScenario3.normal_carNode[8].nic.mac1609_4 ReceivedBroadcasts 17155
+scalar HighwayScenario3.normal_carNode[8].nic.mac1609_4 SentPackets 1629
+scalar HighwayScenario3.normal_carNode[8].nic.mac1609_4 SNIRLostPackets 0
+scalar HighwayScenario3.normal_carNode[8].nic.mac1609_4 RXTXLostPackets 0
+scalar HighwayScenario3.normal_carNode[8].nic.mac1609_4 TotalLostPackets 0
+scalar HighwayScenario3.normal_carNode[8].nic.mac1609_4 DroppedPacketsInMac 0
+scalar HighwayScenario3.normal_carNode[8].nic.mac1609_4 TooLittleTime 0
+scalar HighwayScenario3.normal_carNode[8].nic.mac1609_4 TimesIntoBackoff 1629
+scalar HighwayScenario3.normal_carNode[8].nic.mac1609_4 SlotsBackoff 2460
+scalar HighwayScenario3.normal_carNode[8].nic.mac1609_4 NumInternalContention 0
+scalar HighwayScenario3.normal_carNode[8].nic.mac1609_4 totalBusyTime 1.955165
+scalar HighwayScenario3.normal_carNode[8].veinsmobility startTime 17.7
+scalar HighwayScenario3.normal_carNode[8].veinsmobility totalTime 162.8
+scalar HighwayScenario3.normal_carNode[8].veinsmobility stopTime 180.6
+scalar HighwayScenario3.normal_carNode[8].veinsmobility minSpeed 30.615832233009
+scalar HighwayScenario3.normal_carNode[8].veinsmobility maxSpeed 30.740763137169
+scalar HighwayScenario3.normal_carNode[8].veinsmobility totalDistance 4994.449354761
+scalar HighwayScenario3.normal_carNode[8].veinsmobility totalCO2Emission 870.9468174023
+

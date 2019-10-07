@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 26. 11. 2017 12:32:25 by Netedit Version 0.30.0
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="netconvertConfiguration.xsd">
+
+    <output>
+        <output-file value="C:\Users\user\highway.rou.xml"/>
+    </output>
+
+    <processing>
+        <ignore-errors value="true"/>
+    </processing>
+
+</configuration>
+-->
+
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="routes_file.xsd">
+    <vType id="attacker" lcSpeedGain="10.0" accel="4.5" decel="10.0" maxSpeed="85" speedFactor="1.75" speedDev="0.1" sigma="0.1" guiShape="passenger/sedan" />
+    <vType id="normal_car" lcKeepRight="2.0" accel="2.5" decel="8.0" maxSpeed="40" speedFactor="0.9" speedDev="0.05" sigma="0.5" guiShape="passenger/hatchback" />
+    
+	<route id="route0" edges="highway"/>
+	
+	<!--<flow id="normal_car" type="normal_car" from="highway" to="highway" begin="0" number="100" departPos="base" departLane="best" departSpeed="max" probability="0.5" />-->
+	
+	<!--dobre vysledky-->
+	<flow id="normal_car" type="normal_car" from="highway" to="highway" begin="0" end="22" number="10" departPos="base" departLane="best" departSpeed="max" />
+	<!--<vehicle id="1" type="attacker" route="route0" depart="23" color="249,191,59" departSpeed="max" departLane="1" />-->
+	<vehicle id="1" type="attacker" route="route0" depart="22" color="249,191,59" departSpeed="max" departLane="1" />
+	
+	<!--<vehicle id="0" type="normal_car" route="route0" depart="0" color="255,255,255" departSpeed="max" departLane="0" />-->
+</routes>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scave:Analysis xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:scave="http://www.omnetpp.org/omnetpp/scave">
+  <inputs>
+    <inputs name="/Secure_Inter_Vehicle_Communication_Scenario3/simulations/results/Scenario3Patched-*.vec"/>
+    <inputs name="/Secure_Inter_Vehicle_Communication_Scenario3/simulations/results/Scenario3Patched-*.sca"/>
+  </inputs>
+  <datasets/>
+  <chartSheets/>
+</scave:Analysis>

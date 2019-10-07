@@ -1,0 +1,179 @@
+file 2580693 1524956500                                         
+version 2
+run Scenario3Patched-0-20180429-00:57:24-9508
+attr configname Scenario3Patched
+attr datetime 20180429-00:57:24
+attr experiment Scenario3Patched
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvarsf ""
+attr measurement ""
+attr network HighwayScenario3
+attr processid 9508
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+param *.attackerNode[*].applType "\"AttackerAppLayer_Sybil\""
+param *.normal_carNode[*].applType "\"NormalAppLayer_Secure\""
+param *.normal_carNode[*].appl.headerLength "80 bit"
+param *.normal_carNode[*].appl.sendBeacons true
+param *.normal_carNode[*].appl.dataOnSch false
+param *.normal_carNode[*].appl.beaconInterval 0.1s
+param *.node[*].applType "\"NormalAppLayer_Secure\""
+param *.node[*].appl.headerLength "80 bit"
+param *.node[*].appl.sendBeacons true
+param *.node[*].appl.dataOnSch false
+param *.node[*].appl.beaconInterval 0.1s
+param **.debug false
+param **.coreDebug false
+param *.playgroundSizeX 5500m
+param *.playgroundSizeY 500m
+param *.playgroundSizeZ 50m
+param *.annotations.draw false
+param *.obstacles.debug false
+param *.manager.updateInterval 0.1s
+param *.manager.host "\"localhost\""
+param *.manager.port 9999
+param *.manager.autoShutdown true
+param *.manager.launchConfig "xmldoc(\"highway.launchd.xml\")"
+param *.connectionManager.sendDirect true
+param *.connectionManager.maxInterfDist 2600m
+param *.connectionManager.drawMaxIntfDist false
+param *.**.nic.mac1609_4.useServiceChannel false
+param *.**.nic.mac1609_4.txPower 20mW
+param *.**.nic.mac1609_4.bitrate 6Mbps
+param *.**.nic.phy80211p.sensitivity -89dBm
+param *.**.nic.phy80211p.useThermalNoise true
+param *.**.nic.phy80211p.thermalNoise -110dBm
+param *.**.nic.phy80211p.decider "xmldoc(\"config.xml\")"
+param *.**.nic.phy80211p.analogueModels "xmldoc(\"config.xml\")"
+param *.**.nic.phy80211p.usePropagationDelay true
+param *.**.nic.phy80211p.antenna "xmldoc(\"antenna.xml\", \"/root/Antenna[@id='monopole']\")"
+param *.manager.moduleType "\"attacker=org.car2x.veins.nodes.Car normal_car=org.car2x.veins.nodes.Car *=org.car2x.veins.nodes.Car\""
+param *.manager.moduleName "\"attacker=attackerNode normal_car=normal_carNode *=node\""
+param *.node[*].veinsmobilityType.debug true
+param *.node[*].veinsmobility.x 0
+param *.node[*].veinsmobility.y 0
+param *.node[*].veinsmobility.z 1.895
+param *.attackerNode[*].veinsmobilityType.debug true
+param *.attackerNode[*].veinsmobility.x 0
+param *.attackerNode[*].veinsmobility.y 0
+param *.attackerNode[*].veinsmobility.z 1.895
+param *.normal_carNode[*].veinsmobilityType.debug true
+param *.normal_carNode[*].veinsmobility.x 0
+param *.normal_carNode[*].veinsmobility.y 0
+param *.normal_carNode[*].veinsmobility.z 1.895
+
+vector 0 HighwayScenario3.normal_carNode[0].veinsmobility posx ETV
+vector 1 HighwayScenario3.normal_carNode[0].veinsmobility posy ETV
+vector 2 HighwayScenario3.normal_carNode[0].veinsmobility speed ETV
+vector 3 HighwayScenario3.normal_carNode[0].veinsmobility acceleration ETV
+vector 4 HighwayScenario3.normal_carNode[0].veinsmobility co2emission ETV
+vector 5 HighwayScenario3.normal_carNode[1].veinsmobility posx ETV
+vector 6 HighwayScenario3.normal_carNode[1].veinsmobility posy ETV
+vector 7 HighwayScenario3.normal_carNode[1].veinsmobility speed ETV
+vector 8 HighwayScenario3.normal_carNode[1].veinsmobility acceleration ETV
+vector 9 HighwayScenario3.normal_carNode[1].veinsmobility co2emission ETV
+vector 10 HighwayScenario3.normal_carNode[2].veinsmobility posx ETV
+vector 11 HighwayScenario3.normal_carNode[2].veinsmobility posy ETV
+vector 12 HighwayScenario3.normal_carNode[2].veinsmobility speed ETV
+vector 13 HighwayScenario3.normal_carNode[2].veinsmobility acceleration ETV
+vector 14 HighwayScenario3.normal_carNode[2].veinsmobility co2emission ETV
+vector 15 HighwayScenario3.normal_carNode[3].veinsmobility posx ETV
+vector 16 HighwayScenario3.normal_carNode[3].veinsmobility posy ETV
+vector 17 HighwayScenario3.normal_carNode[3].veinsmobility speed ETV
+vector 18 HighwayScenario3.normal_carNode[3].veinsmobility acceleration ETV
+vector 19 HighwayScenario3.normal_carNode[3].veinsmobility co2emission ETV
+vector 20 HighwayScenario3.normal_carNode[4].veinsmobility posx ETV
+vector 21 HighwayScenario3.normal_carNode[4].veinsmobility posy ETV
+vector 22 HighwayScenario3.normal_carNode[4].veinsmobility speed ETV
+vector 23 HighwayScenario3.normal_carNode[4].veinsmobility acceleration ETV
+vector 24 HighwayScenario3.normal_carNode[4].veinsmobility co2emission ETV
+vector 25 HighwayScenario3.normal_carNode[5].veinsmobility posx ETV
+vector 26 HighwayScenario3.normal_carNode[5].veinsmobility posy ETV
+vector 27 HighwayScenario3.normal_carNode[5].veinsmobility speed ETV
+vector 28 HighwayScenario3.normal_carNode[5].veinsmobility acceleration ETV
+vector 29 HighwayScenario3.normal_carNode[5].veinsmobility co2emission ETV
+vector 30 HighwayScenario3.normal_carNode[6].veinsmobility posx ETV
+vector 31 HighwayScenario3.normal_carNode[6].veinsmobility posy ETV
+vector 32 HighwayScenario3.normal_carNode[6].veinsmobility speed ETV
+vector 33 HighwayScenario3.normal_carNode[6].veinsmobility acceleration ETV
+vector 34 HighwayScenario3.normal_carNode[6].veinsmobility co2emission ETV
+vector 35 HighwayScenario3.normal_carNode[7].veinsmobility posx ETV
+vector 36 HighwayScenario3.normal_carNode[7].veinsmobility posy ETV
+vector 37 HighwayScenario3.normal_carNode[7].veinsmobility speed ETV
+vector 38 HighwayScenario3.normal_carNode[7].veinsmobility acceleration ETV
+vector 39 HighwayScenario3.normal_carNode[7].veinsmobility co2emission ETV
+vector 40 HighwayScenario3.normal_carNode[8].veinsmobility posx ETV
+vector 41 HighwayScenario3.normal_carNode[8].veinsmobility posy ETV
+vector 42 HighwayScenario3.normal_carNode[8].veinsmobility speed ETV
+vector 43 HighwayScenario3.normal_carNode[8].veinsmobility acceleration ETV
+vector 44 HighwayScenario3.normal_carNode[8].veinsmobility co2emission ETV
+vector 45 HighwayScenario3.normal_carNode[9].veinsmobility posx ETV
+vector 46 HighwayScenario3.normal_carNode[9].veinsmobility posy ETV
+vector 47 HighwayScenario3.normal_carNode[9].veinsmobility speed ETV
+vector 48 HighwayScenario3.normal_carNode[9].veinsmobility acceleration ETV
+vector 49 HighwayScenario3.normal_carNode[9].veinsmobility co2emission ETV
+vector 50 HighwayScenario3.attackerNode[10].veinsmobility posx ETV
+vector 51 HighwayScenario3.attackerNode[10].veinsmobility posy ETV
+vector 52 HighwayScenario3.attackerNode[10].veinsmobility speed ETV
+vector 53 HighwayScenario3.attackerNode[10].veinsmobility acceleration ETV
+vector 54 HighwayScenario3.attackerNode[10].veinsmobility co2emission ETV
+4	6748 45190 22 1131230 0.3 146.8 1466 -2.6879294891013 16.336549301082 9420.746966552 86397.214452567
+3	51938 47526 22 1131230 0.3 146.8 1466 -1.1626380452071 1.2072113482282 -0.030421065748668 392.0197991689
+2	99464 45133 12 1131230 0.2 146.8 1467 33.971561954435 34.096464784109 49928.50784195 1699290.1661366
+1	144597 30635 2 1131230 0.1 146.8 1468 29.95 29.95 43966.599999999 1316799.67
+0	175232 45119 2 1131230 0.1 146.8 1468 30.1 5019.5483014041 3703935.4057822 12399182738.774
+9	220351 45500 284 1148011 2.5 149.3 1469 -2.7027261317162 16.268441586395 9388.3735742742 86045.263225963
+8	265851 47740 284 1148011 2.5 149.3 1469 -1.2004145031096 1.2038087556721 0.29464900144376 391.21607065919
+7	313591 45375 253 1148011 2.4 149.3 1470 33.913415354219 34.038308782773 49944.873265757 1696934.1748892
+6	358966 30845 222 1148011 2.3 149.3 1471 26.65 29.95 42762.849999999 1246272.9175
+5	389811 45395 222 1148011 2.3 149.3 1471 30.1 5021.1871596369 3712590.6587077 12431974081.466
+14	435206 47291 1032 1167589 4.7 152.5 1479 -2.6381445761442 16.215483905043 9357.8228597407 83907.507240968
+13	482497 49707 1032 1167589 4.7 152.5 1479 -1.19136625377 1.2164652187494 -1.1386204339215 387.05352075881
+12	532204 47298 968 1167589 4.6 152.5 1480 33.673764060628 33.798672426927 49928.437246635 1684359.2914313
+11	579502 32686 904 1167589 4.5 152.5 1481 29.95 29.95 44355.949999999 1328460.7025
+10	612188 47289 904 1167589 4.5 152.5 1481 30.1 5019.5754701947 3736750.4495808 12508832201.873
+19	659477 51315 2530 1250113 6.9 167.3 1605 -1.7407238864994 14.432806524208 8839.3140922042 70138.874266466
+18	710792 54230 2530 1250113 6.9 167.3 1605 -1.2297421638505 1.2030035056523 -1.0770081353257 425.48620576982
+17	765022 51660 2421 1250113 6.8 167.3 1606 31.021695450207 31.14668656699 49919.71408102 1551669.5317603
+16	816682 35796 2312 1250113 6.7 167.3 1607 26.65 29.95 47142.949999999 1385635.7974999
+15	852478 51669 2312 1250113 6.7 167.3 1607 30.1 5018.9676789216 4054505.5005552 13570830254.656
+29	904147 50488 8832 1252320 11.3 167.8 1566 -1.9791407988927 22.828877156861 9029.0466910703 74978.078620761
+28	954635 53089 8832 1252320 11.3 167.8 1566 -8 2.3590146732749 -0.88095781102311 537.91669540962
+27	1007724 50567 8597 1252320 11.2 167.8 1567 30.260536251656 31.92900579196 49926.379215627 1590721.229695
+26	1058291 35079 8362 1252320 11.1 167.8 1568 26.65 26.65 41787.200000001 1113628.88
+25	1093370 50551 8362 1252320 11.1 167.8 1568 30.1 5019.553975108 3956178.0518571 13242714125.007
+34	1143921 48772 14148 1255482 13.5 168.9 1555 -3.3888267300139 27.471302954116 11003.391293703 142019.02238247
+33	1192693 52121 14148 1255482 13.5 168.9 1555 -8 2.497277209477 -0.22432312427548 2697.257800194
+32	1244814 50258 13840 1255482 13.4 168.9 1556 20.876176977817 36.065802231867 49943.929841581 1608522.6222178
+31	1295072 34890 13532 1255482 13.3 168.9 1557 26.65 29.95 43893.15 1241605.4925
+30	1329962 50279 13532 1255482 13.3 168.9 1557 30.1 5020.8910945954 3942868.7226111 13168910487.172
+49	1380241 48082 40132 1256084 20.1 169.2 1492 -2.6119001841518 25.343135116701 9720.0956694723 96672.202991617
+48	1428323 50499 40132 1256084 20.1 169.2 1492 -8 2.4985974500305 -0.16694545920473 900.89328546524
+47	1478822 48328 39581 1256084 20 169.2 1493 29.292526813689 33.716643539866 49945.259247406 1671268.3542932
+46	1527150 33586 39030 1256084 19.9 169.2 1494 26.65 26.65 39815.100000001 1061072.415
+45	1560736 48343 39030 1256084 19.9 169.2 1494 30.1 5021.2609399695 3784579.8048177 12699838746.016
+54	1609079 46538 52774 1257096 22.3 170.3 1481 -3.8133236388524 48.730239874055 13621.77657203 333327.7996358
+53	1655617 50109 52774 1257096 22.3 170.3 1481 -9.5424140966471 4.4996343247011 -24.51500617409 6357.912989772
+52	1705726 48039 51951 1257096 22.2 170.3 1482 29.885927419061 40.642318512015 49934.253111253 1684231.4707917
+51	1753765 33392 51128 1257096 22.1 170.3 1483 26.65 29.95 41234.650000001 1150198.7875
+50	1787157 48047 51128 1257096 22.1 170.3 1483 30.1 5019.7062293359 3776525.2932048 12668338646.607
+39	1835204 50815 21078 1259354 15.7 173.8 1582 -1.9622572049527 23.042163854035 9182.0360898631 78791.104381715
+38	1886019 53697 21078 1259354 15.7 173.8 1582 -6.6949781862564 2.31563880865 0.34795918414601 667.54249096616
+37	1939716 51199 20693 1259354 15.6 173.8 1583 27.535598722676 31.839424010084 49945.005561169 1576605.5435024
+36	1990915 35598 20308 1259354 15.5 173.8 1584 26.65 29.95 44913.000000001 1277778.48
+35	2026513 51219 20308 1259354 15.5 173.8 1584 30.1 5021.4198001112 4006129.4648884 13411218336.244
+24	2077732 52980 5042 1259573 9.1 174.4 1654 -1.5700855671309 22.985896448082 9550.4803011354 84827.333924343
+23	2130712 55638 5042 1259573 9.1 174.4 1654 -8 2.4747201777063 0.034174219763428 1947.9065911082
+22	2186350 53428 4876 1259573 9 174.4 1655 18.359503013114 30.554182526641 49939.120319999 1510794.6937011
+21	2239778 37072 4710 1259573 8.9 174.4 1656 29.95 29.95 49597.199999999 1485436.1399999
+20	2276850 53447 4710 1259573 8.9 174.4 1656 30.1 5020.9650145748 4188936.7911557 14012679409.333
+44	2330297 52592 29710 1260204 17.9 180.5 1627 -1.5904016835455 14.077987472295 8709.4681740229 67300.736720067
+43	2382889 55429 29710 1260204 17.9 180.5 1627 -1.1838908551726 1.1884337515221 -0.3606382056023 410.68214207874
+42	2438318 52815 29244 1260204 17.8 180.5 1628 30.615832233009 30.740763137169 49944.493547609 1532221.0426594
+41	2491133 36734 28778 1260204 17.7 180.5 1629 29.95 29.95 48788.549999999 1461217.0724999
+40	2527867 52824 28778 1260204 17.7 180.5 1629 30.1 5021.4838959812 4112009.6378542 13770166633.312
+
