@@ -1,7 +1,10 @@
+*.gz
+*.tgz
 inet
+inet4
+omnetpp
 omnetpp-5.7
 simulte
+sumo
 sumo-1.11.0
 veins
-*.tgz
-*.gz
