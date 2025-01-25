@@ -18,10 +18,12 @@
 #include "veins/base/phyLayer/Mapping.h"
 #include "veins/base/messages/AirFrame_m.h"
 
-using Veins::AirFrame;
+using namespace veins;
+
+using veins::AirFrame;
 
 LogNormalShadowing::LogNormalShadowing(double mean, double stdDev, simtime_t_cref interval):
-	mean(mean), stdDev(stdDev), interval(interval)
+    AnalogueModel(owner), mean(mean), stdDev(stdDev), interval(interval)
 { }
 
 LogNormalShadowing::~LogNormalShadowing() {}

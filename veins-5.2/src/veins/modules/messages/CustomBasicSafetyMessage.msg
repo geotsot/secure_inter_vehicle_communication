@@ -1,11 +1,7 @@
-cplusplus {{
-#include "veins/base/utils/Coord.h"
-#include "veins/modules/messages/WaveShortMessage_m.h"
-}}
+import veins.base.utils.Coord;
+import veins.modules.messages.WaveShortMessage;
 
-class WaveShortMessage;
-class noncobject Coord;
-class noncobject EventFlag;
+namespace veins;
 
 packet CustomBasicSafetyMessage extends WaveShortMessage {
 	Coord senderPos;

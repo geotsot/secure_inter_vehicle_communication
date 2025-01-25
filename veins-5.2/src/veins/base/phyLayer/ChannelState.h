@@ -4,6 +4,9 @@
 #include <sstream>
 #include "veins/base/utils/MiXiMDefs.h"
 
+namespace veins {
+
+
 /**
  * @brief Provides information about the current state of the channel:
  *
@@ -62,3 +65,5 @@ public:
 };
 
 #endif /*_CHANNELSTATE_H_*/
+
+} // namespace veins

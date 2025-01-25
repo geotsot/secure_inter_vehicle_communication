@@ -19,8 +19,11 @@
 #include "veins/base/messages/AirFrame_m.h"
 #include "veins/base/connectionManager/ChannelAccess.h"
 
-using Veins::AirFrame;
-using Veins::ChannelAccess;
+using namespace veins;
+
+using veins::AirFrame;
+using veins::ChannelAccess;
+using veins::BaseWorldUtility;
 
 double JakesFadingMapping::getValue(const Argument& pos) const {
 	double f = model->carrierFrequency;
@@ -67,6 +70,7 @@ double JakesFadingMapping::getValue(const Argument& pos) const {
 
 JakesFading::JakesFading(int fadingPaths, simtime_t_cref delayRMS,
 						 double carrierFrequency, simtime_t_cref interval):
+    AnalogueModel(owner),
 	fadingPaths(fadingPaths),
 	carrierFrequency(carrierFrequency),
 	interval(interval)

@@ -20,7 +20,10 @@
 #include "veins/base/phyLayer/AnalogueModel.h"
 #include "veins/base/phyLayer/Mapping.h"
 
-using Veins::AirFrame;
+using veins::AirFrame;
+
+namespace veins {
+
 
 class JakesFading;
 
@@ -117,7 +120,7 @@ public:
 	/**
 	 * @brief Takes the number of fading paths, the maximum delay
 	 * on a path, the hosts move, the carrier frequency used and the
-	 * interval in which to defien attenuation entries in.	 *
+	 * interval in which to define attenuation entries in.	 *
 	 */
 	JakesFading(int fadingPaths, simtime_t_cref delayRMS,
 				double carrierFrequency, simtime_t_cref interval);
@@ -127,3 +130,4 @@ public:
 };
 
 #endif /* JAKESFADING_H_ */
+} // namespace veins

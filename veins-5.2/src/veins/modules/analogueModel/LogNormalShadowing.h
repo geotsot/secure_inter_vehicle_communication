@@ -19,7 +19,9 @@
 #include "veins/base/utils/MiXiMDefs.h"
 #include "veins/base/phyLayer/AnalogueModel.h"
 
-using Veins::AirFrame;
+using veins::AirFrame;
+
+namespace veins {
 
 /**
  * @brief Channel state implementing log-normal shadowing.
@@ -78,3 +80,5 @@ public:
 };
 
 #endif /* LOGNORMALSHADOWING_H_ */
+
+} // namespace veins
