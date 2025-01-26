@@ -3,6 +3,8 @@
 //
 // Documentation for these modules is at http://veins.car2x.org/
 //
+// SPDX-License-Identifier: GPL-2.0-or-later
+//
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation; either version 2 of the License, or
@@ -22,9 +24,11 @@ package org.car2x.veins.nodes;
 
 import org.car2x.veins.base.connectionManager.ConnectionManager;
 import org.car2x.veins.base.modules.BaseWorldUtility;
-import org.car2x.veins.modules.mobility.traci.TraCIScenarioManagerLaunchd;
+import org.car2x.veins.modules.mobility.traci.TraCIScenarioManager*;
 import org.car2x.veins.modules.obstacle.ObstacleControl;
 import org.car2x.veins.modules.world.annotations.AnnotationManager;
+import org.car2x.veins.nodes.Car;
+import org.car2x.veins.visualizer.roads.RoadsCanvasVisualizer;
 
 network Scenario
 {
@@ -46,16 +50,21 @@ network Scenario
         }
         world: BaseWorldUtility {
             parameters:
-                playgroundSizeX = playgroundSizeX;
-                playgroundSizeY = playgroundSizeY;
-                playgroundSizeZ = playgroundSizeZ;
+                playgroundSizeX = veins_eval_by_version(veins_omnetpp_buildnum(), "playgroundSizeX", 1525, "parent.playgroundSizeX");
+                playgroundSizeY = veins_eval_by_version(veins_omnetpp_buildnum(), "playgroundSizeY", 1525, "parent.playgroundSizeY");
+                playgroundSizeZ = veins_eval_by_version(veins_omnetpp_buildnum(), "playgroundSizeZ", 1525, "parent.playgroundSizeZ");
                 @display("p=30,0;i=misc/globe");
         }
         manager: TraCIScenarioManagerLaunchd {
             parameters:
                 @display("p=512,128");
         }
-        
+        roadsCanvasVisualizer: RoadsCanvasVisualizer {
+            @display("p=300,0");
+        }
+        node[0]: Car {
+        }
+
     connections allowunconnected:
 }
 
