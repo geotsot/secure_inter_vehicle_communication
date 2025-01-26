@@ -3,7 +3,7 @@ cplusplus {{
 #include "veins/base/phyLayer/ChannelState.h"
 }}
 
-class noncobject ChannelState;
+namespace veins;
 
 enum SenseMode {
     UNTIL_IDLE = 1;		//sense until channel is busy or timeout is reached
@@ -46,6 +46,6 @@ packet ChannelSenseRequest
 {
     int senseMode enum(SenseMode);	// defines the sensing mode (see SenseMode enum)
     simtime_t senseTimeout; 		// Time to listen on the channel
-    ChannelState result; 			// The result of the request containing the current state of the channel.
-									// See ChannelState for details.
+    bool idle;                      // Channel idle state (from ChannelState)
+    double rssi;                    // Channel RSSI value (from ChannelState)
 }

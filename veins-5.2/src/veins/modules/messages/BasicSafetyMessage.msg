@@ -18,13 +18,10 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-cplusplus {{
-#include "veins/base/utils/Coord.h"
-#include "veins/modules/messages/WaveShortMessage_m.h"
-}}
+import veins.base.utils.Coord;
+import veins.modules.messages.WaveShortMessage;
 
-class WaveShortMessage;
-class noncobject Coord;
+namespace veins;
 
 packet BasicSafetyMessage extends WaveShortMessage {
 	Coord senderPos;
