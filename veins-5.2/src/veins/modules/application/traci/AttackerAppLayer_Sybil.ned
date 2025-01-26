@@ -23,6 +23,6 @@ import org.car2x.veins.modules.application.ieee80211p.BaseWaveApplLayer;
 
 simple AttackerAppLayer_Sybil extends BaseWaveApplLayer
 {
-    @class(AttackerAppLayer_Sybil);
+    @class(veins::AttackerAppLayer_Sybil);
     @display("i=block/app2");
 }

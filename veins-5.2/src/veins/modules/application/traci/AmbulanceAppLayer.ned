@@ -24,7 +24,7 @@ import org.car2x.veins.modules.application.ieee80211p.BaseWaveApplLayer;
 simple AmbulanceAppLayer extends BaseWaveApplLayer
 {
     parameters:
-        @class(AmbulanceAppLayer);
+        @class(veins::AmbulanceAppLayer);
         @display("i=block/app2");
         int messageLength = default(60);
 }

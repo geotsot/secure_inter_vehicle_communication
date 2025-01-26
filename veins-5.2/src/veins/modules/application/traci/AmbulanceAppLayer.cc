@@ -1,16 +1,19 @@
 #include "AmbulanceAppLayer.h"
 #include "veins/modules/messages/CustomBasicSafetyMessage_m.h"
 
-Define_Module(AmbulanceAppLayer);
+using namespace veins;
 
-void AmbulanceAppLayer::initialize(int stage) {
+Define_Module(veins::AmbulanceAppLayer);
+
+void AmbulanceAppLayer::initialize(int stage)
+{
     BaseWaveApplLayer::initialize(stage);
     if (stage == 0) {
         sentMessage = false;
         lastDroveAt = simTime();
         currentSubscribedServiceId = -1;
 
-        messageLength = par("messageLength").longValue();
+        messageLength = par("messageLength");
     }
 }
 

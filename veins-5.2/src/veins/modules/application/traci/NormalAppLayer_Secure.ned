@@ -23,7 +23,7 @@ import org.car2x.veins.modules.application.ieee80211p.BaseWaveApplLayer;
 
 simple NormalAppLayer_Secure extends BaseWaveApplLayer
 {
-    @class(NormalAppLayer_Secure);
+    @class(veins::NormalAppLayer_Secure);
     @display("i=block/app2");
     int messageLength = default(256);
     double signDelay = default(0);

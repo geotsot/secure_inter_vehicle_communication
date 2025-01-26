@@ -23,7 +23,7 @@ import org.car2x.veins.modules.application.ieee80211p.BaseWaveApplLayer;
 
 simple NormalAppLayer extends BaseWaveApplLayer
 {
-    @class(NormalAppLayer);
+    @class(veins::NormalAppLayer);
     @display("i=block/app2");
     int messageLength = default(58);
 }

@@ -3,6 +3,8 @@
 //
 // Documentation for these modules is at http://veins.car2x.org/
 //
+// SPDX-License-Identifier: GPL-2.0-or-later
+//
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation; either version 2 of the License, or
@@ -34,8 +36,7 @@ import org.car2x.veins.base.modules.IBaseApplLayer;
 simple BaseWaveApplLayer like IBaseApplLayer
 {
     parameters:
-        bool debug = default(false); //whether to print debug output
-
+        @class(veins::BaseWaveApplLayer);
         int headerLength = default(88bit) @unit(bit); //header length of the application
 
         bool sendBeacons = default(true); //tell the applayer to periodically send beacons

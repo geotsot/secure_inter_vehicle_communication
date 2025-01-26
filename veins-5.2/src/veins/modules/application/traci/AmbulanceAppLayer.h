@@ -3,6 +3,11 @@
 
 #include "veins/modules/application/ieee80211p/BaseWaveApplLayer.h"
 
+using namespace omnetpp;
+
+namespace veins {
+
+
 class AmbulanceAppLayer : public BaseWaveApplLayer {
 	public:
 		virtual void initialize(int stage);
@@ -17,3 +22,5 @@ class AmbulanceAppLayer : public BaseWaveApplLayer {
 };
 
 #endif
+
+} // namespace veins
