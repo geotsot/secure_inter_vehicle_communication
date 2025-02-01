@@ -21,6 +21,7 @@
 //
 
 #include "veins/modules/application/ieee80211p/BaseWaveApplLayer.h"
+#include "veins/base/utils/MiXiMDefs.h"
 
 using namespace veins;
 
@@ -51,6 +52,7 @@ void BaseWaveApplLayer::initialize(int stage)
         mac = FindModule<WaveAppToMac1609_4Interface*>::findSubModule(getParentModule());
         ASSERT(mac);
 
+        // store myID
         myId = getParentModule()->getId();
 
         // read parameters
@@ -84,7 +86,8 @@ void BaseWaveApplLayer::initialize(int stage)
         receivedWSMs = 0;
     }
     else if (stage == 1) {
-        // simulate asynchronous channel accesss
+
+        // simulate asynchronous channel access
 
         if (dataOnSch == true && !mac->isChannelSwitchingActive()) {
             dataOnSch = false;
@@ -162,7 +165,6 @@ void BaseWaveApplLayer::populateWSM(WaveShortMessage* wsm, LAddress::L2Type rcvI
     wsm->setSerial(serial);
     wsm->setBitLength(headerLength);
 
-
     if (BasicSafetyMessage* bsm = dynamic_cast<BasicSafetyMessage*>(wsm)) {
         bsm->setSenderPos(curPosition);
         bsm->setSenderSpeed(curSpeed);
@@ -208,15 +210,15 @@ void BaseWaveApplLayer::handlePositionUpdate(cObject* obj)
 void BaseWaveApplLayer::handleParkingUpdate(cObject* obj)
 {
     isParked = mobility->getParkingState();
-    if (communicateWhileParked == false) {
-        if (isParked == true) {
-            (FindModule<BaseConnectionManager*>::findGlobalModule())->unregisterNic(this->getParentModule()->getSubmodule("nic"));
-        }
-        else {
-            Coord pos = mobility->getCurrentDirection();
-            (FindModule<BaseConnectionManager*>::findGlobalModule())->registerNic(this->getParentModule()->getSubmodule("nic"), (ChannelAccess*) this->getParentModule()->getSubmodule("nic")->getSubmodule("phy80211p"), &pos);
-        }
-    }
+    // if (communicateWhileParked == false) {
+    //     if (isParked == true) {
+    //         (FindModule<BaseConnectionManager*>::findGlobalModule())->unregisterNic(this->getParentModule()->getSubmodule("nic"));
+    //     }
+    //     else {
+    //         Coord pos = mobility->getCurrentDirection();
+    //         (FindModule<BaseConnectionManager*>::findGlobalModule())->registerNic(this->getParentModule()->getSubmodule("nic"), (ChannelAccess*) this->getParentModule()->getSubmodule("nic")->getSubmodule("phy80211p"), &pos);
+    //     }
+    // }
 }
 
 void BaseWaveApplLayer::handleLowerMsg(cMessage* msg)

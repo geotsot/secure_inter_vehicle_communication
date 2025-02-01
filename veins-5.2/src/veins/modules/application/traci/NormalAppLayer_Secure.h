@@ -5,6 +5,8 @@
 #include "veins/base/utils/Coord.h"
 #include <algorithm>
 
+namespace veins {
+
 class NormalAppLayer_Secure : public BaseWaveApplLayer {
     struct neighbor {
         simtime_t lastUpdate;
@@ -40,5 +42,8 @@ class NormalAppLayer_Secure : public BaseWaveApplLayer {
         double signDelay;
         double verifyDelay;
 };
+
+
+} // namespace veins
 
 #endif

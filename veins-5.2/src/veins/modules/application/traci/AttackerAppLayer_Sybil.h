@@ -3,6 +3,8 @@
 
 #include "veins/modules/application/ieee80211p/BaseWaveApplLayer.h"
 
+namespace veins {
+
 class AttackerAppLayer_Sybil : public BaseWaveApplLayer {
 	public:
 		virtual void initialize(int stage);
@@ -15,5 +17,7 @@ class AttackerAppLayer_Sybil : public BaseWaveApplLayer {
 	protected:
         virtual void onBSM(BasicSafetyMessage* bsm);
 };
+
+} // namespace veins
 
 #endif

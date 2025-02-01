@@ -26,6 +26,7 @@
 #define MIXIM_SIGNAL_PASSEDMSG_NAME       "org.car2x.veins.base.utils.passedmsg"
 #define MIXIM_SIGNAL_HOSTSTATE_NAME       "org.car2x.veins.base.utils.hoststate"
 #define MIXIM_SIGNAL_MOBILITY_CHANGE_NAME "veinsmobilityStateChanged"
+#define TRACI_SIGNAL_PARKING_CHANGE_NAME  "veinsparkingtateChanged"
 #define MIXIM_SIGNAL_BATTERY_CHANGE_NAME  "org.car2x.veins.modules.power.battery.batterystate"
 #define MIXIM_SIGNAL_MOBANMSG_NAME        "org.car2x.veins.modules.utility.bbmobanmessage"
 

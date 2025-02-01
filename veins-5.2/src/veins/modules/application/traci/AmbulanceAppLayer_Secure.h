@@ -3,6 +3,8 @@
 
 #include "veins/modules/application/ieee80211p/BaseWaveApplLayer.h"
 
+namespace veins {
+
 class AmbulanceAppLayer_Secure : public BaseWaveApplLayer {
 	public:
 		virtual void initialize(int stage);
@@ -19,5 +21,7 @@ class AmbulanceAppLayer_Secure : public BaseWaveApplLayer {
 
         virtual void handleSelfMsg(cMessage* msg);
 };
+
+} // namespace veins
 
 #endif

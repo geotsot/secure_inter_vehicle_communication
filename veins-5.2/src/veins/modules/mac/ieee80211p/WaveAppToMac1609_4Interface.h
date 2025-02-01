@@ -20,6 +20,8 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
+#pragma once
+
 #include "veins/base/utils/NetwToMacControlInfo.h"
 #include "veins/modules/utility/Consts80211p.h"
 
@@ -36,9 +38,8 @@ namespace veins {
  *
  * @ingroup macLayer
  */
-class WaveAppToMac1609_4Interface {
+class VEINS_API WaveAppToMac1609_4Interface {
 public:
-
     virtual bool isChannelSwitchingActive() = 0;
 
     virtual simtime_t getSwitchingInterval() = 0;
@@ -48,7 +49,13 @@ public:
     virtual void changeServiceChannel(Channel channelNumber) = 0;
 
     virtual ~WaveAppToMac1609_4Interface() {} ;
+
+    /**
+     * @brief Returns the MAC address of this MAC module.
+     */
+    virtual const LAddress::L2Type& getMACAddress() = 0;
 };
 
-#endif /* ___WAVEAPPTOMAC1609_4INTERFACE_H_ */
 } // namespace veins
+
+#endif /* ___WAVEAPPTOMAC1609_4INTERFACE_H_ */

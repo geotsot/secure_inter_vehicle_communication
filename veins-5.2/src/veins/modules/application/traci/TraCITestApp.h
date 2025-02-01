@@ -27,16 +27,18 @@
 #include <omnetpp.h>
 
 #include "veins/base/modules/BaseApplLayer.h"
+#include "veins/base/utils/MiXiMDefs.h"
 #include "veins/modules/mobility/traci/TraCIMobility.h"
 #include "veins/modules/mobility/traci/TraCICommandInterface.h"
 
-using Veins::TraCIMobility;
-using Veins::TraCICommandInterface;
+using veins::TraCIMobility;
+using veins::TraCICommandInterface;
 
 /**
  * FIXME
  */
-namespace Veins {
+namespace veins {
+
 class TraCITestApp : public BaseApplLayer {
 	public:
 		int numInitStages() const { return std::max(BaseApplLayer::numInitStages(), 1); }
@@ -55,7 +57,7 @@ class TraCITestApp : public BaseApplLayer {
 		TraCICommandInterface* traci;
 		TraCICommandInterface::Vehicle* traciVehicle;
 		std::set<std::string> visitedEdges; /**< set of edges this vehicle visited */
-		bool hasStopped; /**< true if at some point in time this vehicle travelled at negligible speed */
+		bool hasStopped; /**< true if at some point in time this vehicle traveled at negligible speed */
 
 	protected:
 		void handleSelfMsg(cMessage*);
@@ -65,6 +67,7 @@ class TraCITestApp : public BaseApplLayer {
 
 		void handlePositionUpdate();
 };
-}
+
+}  // namespace veins
 
 #endif

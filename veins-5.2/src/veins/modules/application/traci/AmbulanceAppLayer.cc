@@ -22,7 +22,7 @@ void AmbulanceAppLayer::handleSelfMsg(cMessage* msg) {
     // will be disseminated periodically after beacon interval
     if (msg->getKind() == SEND_BEACON_EVT)
     {
-        DBG_APP << "Broadcasting emergency event..." << std::endl;
+        DBG_APP(this) << "Broadcasting emergency event..." << std::endl;
 
         CustomBasicSafetyMessage* bsmPt2 = new CustomBasicSafetyMessage();
         populateWSM(bsmPt2);

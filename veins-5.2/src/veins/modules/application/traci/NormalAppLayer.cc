@@ -1,6 +1,8 @@
 #include "NormalAppLayer.h"
 #include "veins/modules/messages/CustomBasicSafetyMessage_m.h"
 
+using namespace veins;
+
 Define_Module(NormalAppLayer);
 
 void NormalAppLayer::initialize(int stage) {
@@ -10,7 +12,7 @@ void NormalAppLayer::initialize(int stage) {
         lastDroveAt = simTime();
         currentSubscribedServiceId = -1;
 
-        messageLength = par("messageLength").longValue();
+        messageLength = par("messageLength");
 
         delayBSM_P1 = 0;
         delayBSM_P2 = 0;
@@ -24,15 +26,15 @@ double NormalAppLayer::getEuclideanDistance(Coord x1, Coord x2) {
 }
 
 void NormalAppLayer::onBSM(BasicSafetyMessage* bsm) {
-    DBG_APP << "Received a BSM" << std::endl;
+    DBG_APP(this) << "Received a BSM" << std::endl;
 
     simtime_t currentTime = simTime();
     simtime_t messageSent = bsm->getTimestamp();
 
-    Coord& senderPosition = bsm->getSenderPos();
+    Coord senderPosition = bsm->getSenderPos();
     double x = senderPosition.x;
     double y = senderPosition.y;
-    Coord& senderSpeed = bsm->getSenderSpeed();
+    Coord senderSpeed = bsm->getSenderSpeed();
     double v = senderSpeed.x;
 
     int neighborIdx = -1;
@@ -85,34 +87,34 @@ void NormalAppLayer::onBSM(BasicSafetyMessage* bsm) {
 }
 
 void NormalAppLayer::onWSM(WaveShortMessage* wsm) {
-    DBG_APP << "Received a WSM" << std::endl;
+    DBG_APP(this) << "Received a WSM" << std::endl;
     if (CustomBasicSafetyMessage* cbsm = dynamic_cast<CustomBasicSafetyMessage*>(wsm)) {
         simtime_t currentTime = simTime();
         simtime_t messageSent = cbsm->getTimestamp();
 
         simtime_t delay = currentTime - messageSent;
-        DBG_APP << "delay: " + std::to_string(delay.dbl()) << std::endl;
+        DBG_APP(this) << "delay: " + std::to_string(delay.dbl()) << std::endl;
         delayBSM_P2 += delay.dbl();
 
         Coord senderPosition = cbsm->getSenderPos();
         Coord senderVelocity = cbsm->getSenderSpeed();
 
-        DBG_APP << "Sender position: " + std::to_string(senderPosition.x) << std::endl;
-        DBG_APP << "My position: " + std::to_string(curPosition.x) << std::endl;
+        DBG_APP(this) << "Sender position: " + std::to_string(senderPosition.x) << std::endl;
+        DBG_APP(this) << "My position: " + std::to_string(curPosition.x) << std::endl;
 
-        DBG_APP << "Sender speed: " + std::to_string(senderVelocity.x) << std::endl;
-        DBG_APP << "My speed: " + std::to_string(curSpeed.x) << std::endl;
+        DBG_APP(this) << "Sender speed: " + std::to_string(senderVelocity.x) << std::endl;
+        DBG_APP(this) << "My speed: " + std::to_string(curSpeed.x) << std::endl;
 
         // https://en.wikipedia.org/wiki/Braking_distance
         // d_total = d_pr + -v^2/2a
         double perceptionReactionTime = 1.0;
         double perceptionReactionDistance = curSpeed.x * perceptionReactionTime;
-        double stoppingDistance = perceptionReactionDistance + (curSpeed.x * curSpeed.x)/(2*traciVehicle->getDecel());
+        double stoppingDistance = perceptionReactionDistance + (curSpeed.x * curSpeed.x)/(2*traciVehicle->getDeccel());
 
         if ((std::fabs(senderPosition.x - curPosition.x) < 100) && (cbsm->getEventIndicator() == 0) && (std::fabs(senderVelocity.x - curSpeed.x) > 1))
         {
-            DBG_APP << "Slowing down..." << std::endl;
-            DBG_APP << "Stopping distance: " + std::to_string(stoppingDistance) << std::endl;
+            DBG_APP(this) << "Slowing down..." << std::endl;
+            DBG_APP(this) << "Stopping distance: " + std::to_string(stoppingDistance) << std::endl;
 
             // stop at the rightmost lane for 3 seconds after traveling the stopping distance
             traciVehicle->stopAt(traciVehicle->getRoadId(), curPosition.x + stoppingDistance, 0, 0, 3);
@@ -126,12 +128,12 @@ void NormalAppLayer::handleSelfMsg(cMessage* msg) {
         // more than 3 seconds elapsed since the last warning about the danger in front and my speed is lower than maximum allowed speed
         if ((simTime() - carAheadLastUpdate > 3) && curSpeed.x < traci->lane(traciVehicle->getLaneId()).getMaxSpeed())
         {
-            DBG_APP << "No obstacle in front of me. Reverting to original behavior." << std::endl;
+            DBG_APP(this) << "No obstacle in front of me. Reverting to original behavior." << std::endl;
             traciVehicle->setSpeed(-1);
         }
     }
 
-    DBG_APP << "NormalAppLayer::handleSelfMsg triggered" << std::endl;
+    DBG_APP(this) << "NormalAppLayer::handleSelfMsg triggered" << std::endl;
     // WSM message will be sent here
     if (WaveShortMessage* wsm = dynamic_cast<WaveShortMessage*>(msg)) {
         //send this message on the service channel until the counter is 3 or higher.
@@ -157,10 +159,10 @@ void NormalAppLayer::handleSelfMsg(cMessage* msg) {
                 }), neighborsList.end());
 
         // debug, show my neighbors
-        DBG_APP << "MY NEIGHBORS" << std::endl;
+        DBG_APP(this) << "MY NEIGHBORS" << std::endl;
         for (int i = 0; i < neighborsList.size(); i++)
         {
-            DBG_APP << "#" << i << ". " << neighborsList[i].lastUpdate << "\t[" << neighborsList[i].position.x << "," << neighborsList[i].position.y << "]" << std::endl;
+            DBG_APP(this) << "#" << i << ". " << neighborsList[i].lastUpdate << "\t[" << neighborsList[i].position.x << "," << neighborsList[i].position.y << "]" << std::endl;
         }
 
         // adjusting speed to slower vehicles ahead
@@ -170,9 +172,9 @@ void NormalAppLayer::handleSelfMsg(cMessage* msg) {
         // my stopping distance
         double my_perceptionReactionTime = 1.0;
         double my_perceptionReactionDistance = curSpeed.x * my_perceptionReactionTime;
-        double my_stoppingDistance = my_perceptionReactionDistance + (curSpeed.x * curSpeed.x)/(2*traciVehicle->getDecel());
+        double my_stoppingDistance = my_perceptionReactionDistance + (curSpeed.x * curSpeed.x)/(2*traciVehicle->getDeccel());
         double my_stoppingPosition = my_x + my_stoppingDistance;
-        DBG_APP << "I am able to safely stop at [" << my_stoppingPosition << "," << my_y << "]" << std::endl;
+        DBG_APP(this) << "I am able to safely stop at [" << my_stoppingPosition << "," << my_y << "]" << std::endl;
 
         int neighborIdx = -1;
         double closestObstacle = my_stoppingPosition;
@@ -184,9 +186,9 @@ void NormalAppLayer::handleSelfMsg(cMessage* msg) {
             // stopping distance of neighbor #i
             double ah_perceptionReactionTime = 1.0;
             double ah_perceptionReactionDistance = v * ah_perceptionReactionTime;
-            double ah_stoppingDistance = ah_perceptionReactionDistance + (v * v)/(2*traciVehicle->getDecel());
+            double ah_stoppingDistance = ah_perceptionReactionDistance + (v * v)/(2*traciVehicle->getDeccel());
             double ah_stoppingPosition = neighborsList[i].position.x + ah_stoppingDistance;
-            DBG_APP << "Vehicle ahead may potentially stop at [" << ah_stoppingPosition << "," << neighborsList[i].position.y << "]" << std::endl;
+            DBG_APP(this) << "Vehicle ahead may potentially stop at [" << ah_stoppingPosition << "," << neighborsList[i].position.y << "]" << std::endl;
 
             // neighbor #i is in front, in my lane and its stopping position is closer than currently closest obstacle
             if (neighborsList[i].position.x > my_x
@@ -203,15 +205,15 @@ void NormalAppLayer::handleSelfMsg(cMessage* msg) {
             // one of my neighbors is potential obstacle, reaction required
             double v = neighborsList[neighborIdx].speed.x;
 
-            DBG_APP << "Obstacle detected; I should adjust my speed to the speed of vehicle ahead." << std::endl;
+            DBG_APP(this) << "Obstacle detected; I should adjust my speed to the speed of vehicle ahead." << std::endl;
             traciVehicle->setSpeed(v);
-            DBG_APP << "Changing speed from " << curSpeed.x << " m/s to " << v << "m/s." << std::endl;
+            DBG_APP(this) << "Changing speed from " << curSpeed.x << " m/s to " << v << "m/s." << std::endl;
         }
         else
         {
             // no obstacles detected
             traciVehicle->setSpeed(-1);
-            DBG_APP << "No further action required. Continue with normal behavior." << std::endl;
+            DBG_APP(this) << "No further action required. Continue with normal behavior." << std::endl;
         }
 
         if (msg->getKind() == SEND_BEACON_EVT) {

@@ -3,6 +3,8 @@
 //
 // Documentation for these modules is at http://veins.car2x.org/
 //
+// SPDX-License-Identifier: GPL-2.0-or-later
+//
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation; either version 2 of the License, or
@@ -20,9 +22,13 @@
 
 #ifndef BASEWAVEAPPLLAYER_H_
 #define BASEWAVEAPPLLAYER_H_
+#pragma once
 
 #include <map>
+
+#include "omnetpp.h"
 #include "veins/base/modules/BaseApplLayer.h"
+#include "veins/base/utils/MiXiMDefs.h"
 #include "veins/modules/utility/Consts80211p.h"
 #include "veins/modules/messages/WaveShortMessage_m.h"
 #include "veins/modules/messages/WaveServiceAdvertisement_m.h"
@@ -32,15 +38,13 @@
 #include "veins/modules/mobility/traci/TraCIMobility.h"
 #include "veins/modules/mobility/traci/TraCICommandInterface.h"
 
-namespace veins {
-
 using veins::AnnotationManager;
 using veins::AnnotationManagerAccess;
 using veins::TraCICommandInterface;
 using veins::TraCIMobility;
 using veins::TraCIMobilityAccess;
 
-//#define DBG_APP std::cerr << "[" << simTime().raw() << "] " << getParentModule()->getFullPath() << " "
+#define DBG_APP(module) EV << "[" << simTime() << "] " << (module ? module->getFullPath() : "UnknownModule") << " "
 
 #ifndef DBG_APP
 #define DBG_APP EV
@@ -59,6 +63,9 @@ using veins::TraCIMobilityAccess;
  * @see PhyLayer80211p
  * @see Decider80211p
  */
+
+namespace veins {
+
 class VEINS_API BaseWaveApplLayer : public BaseApplLayer {
 
 public:
@@ -77,10 +84,10 @@ protected:
     static const simsignalwrap_t mobilityStateChangedSignal;
     static const simsignalwrap_t parkingStateChangedSignal;
     /** @brief handle messages from below and calls the onWSM, onBSM, and onWSA functions accordingly */
-    void handleLowerMsg(cMessage* msg);
+    void handleLowerMsg(cMessage* msg) override;
 
     /** @brief handle self messages */
-    void handleSelfMsg(cMessage* msg);
+    void handleSelfMsg(cMessage* msg) override;
 
     /** @brief sets all the necessary fields in the WSM, BSM, or WSA. */
     virtual void populateWSM(WaveShortMessage*  wsm, LAddress::L2Type rcvId = LAddress::L2BROADCAST(), int serial = 0);
@@ -189,6 +196,6 @@ protected:
     cMessage* sendWSAEvt;
 };
 
-#endif /* BASEWAVEAPPLLAYER_H_ */
-
 } // namespace veins
+
+#endif /* BASEWAVEAPPLLAYER_H_ */

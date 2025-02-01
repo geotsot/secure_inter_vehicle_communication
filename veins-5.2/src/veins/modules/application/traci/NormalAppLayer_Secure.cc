@@ -4,6 +4,8 @@
 #include "veins/modules/phy/DeciderResult80211.h"
 #include "SignalDistanceMap.h"
 
+using namespace veins;
+
 Define_Module(NormalAppLayer_Secure);
 
 void NormalAppLayer_Secure::initialize(int stage) {
@@ -60,43 +62,40 @@ int getDistanceFromRSSI(double rssi) {
     }
 }
 
-bool isSuspect(double rcvPower, double claimedDist) {
+bool isSuspect(double rcvPower, double claimedDist, cModule* module) {
     int lookup_idx = getDistanceFromRSSI(rcvPower);
-    if (lookup_idx >= 0 && lookup_idx <= LOOKUP_TABLE_SIZE - 1)
-    {
+    if (lookup_idx >= 0 && lookup_idx <= LOOKUP_TABLE_SIZE - 1) {
         double estimatedDist = lookup_table[lookup_idx][1];
-        DBG_APP << "Estimated distance: " << estimatedDist << " m" << std::endl;
-        DBG_APP << "Claimed distance: " << claimedDist << " m" << std::endl;
-        if (abs(estimatedDist - claimedDist) > 2)
-        {
-            DBG_APP << "Potential Sybil node detected." << std::endl;
+        DBG_APP(module) << "Estimated distance: " << estimatedDist << " m" << std::endl;
+        DBG_APP(module) << "Claimed distance: " << claimedDist << " m" << std::endl;
+
+        if (abs(estimatedDist - claimedDist) > 2) {
+            DBG_APP(module) << "Potential Sybil node detected." << std::endl;
             return true;
         }
+    } else {
+        DBG_APP(module) << "Could not estimate distance from given RSSI." << std::endl;
     }
-    else
-    {
-        DBG_APP << "Could not estimate distance from given RSSI." << std::endl;
-    }
-
     return false;
 }
 
+
 void NormalAppLayer_Secure::onBSM(BasicSafetyMessage* bsm) {
-    DBG_APP << "Received a BSM" << std::endl;
+    DBG_APP(this) << "Received a BSM" << std::endl;
 
     double rcvPower = ((DeciderResult80211*)((PhyToMacControlInfo*)bsm->getControlInfo())->getDeciderResult())->getRecvPower_dBm();
     double claimedDist = getEuclideanDistance(Coord(bsm->getSenderPos().x, bsm->getSenderPos().y), Coord(curPosition.x, curPosition.y));
-    bool senderIsSuspect = isSuspect(rcvPower, claimedDist);
+    bool senderIsSuspect = isSuspect(rcvPower, claimedDist, this);
 
     //
 
     simtime_t currentTime = simTime();
     simtime_t messageSent = bsm->getTimestamp();
 
-    Coord& senderPosition = bsm->getSenderPos();
+    Coord senderPosition = bsm->getSenderPos();
     double x = senderPosition.x;
     double y = senderPosition.y;
-    Coord& senderSpeed = bsm->getSenderSpeed();
+    Coord senderSpeed = bsm->getSenderSpeed();
     double v = senderSpeed.x;
 
     int neighborIdx = -1;
@@ -162,16 +161,16 @@ void NormalAppLayer_Secure::onBSM(BasicSafetyMessage* bsm) {
 }
 
 void NormalAppLayer_Secure::onWSM(WaveShortMessage* wsm) {
-    DBG_APP << "received a WSM" << std::endl;
+    DBG_APP(this) << "received a WSM" << std::endl;
 
     if (CustomBasicSafetyMessage* cbsm = dynamic_cast<CustomBasicSafetyMessage*>(wsm)) {
         simtime_t currentTime = simTime();
         simtime_t messageSent = cbsm->getTimestamp();
         int messageValidity = cbsm->getValidity();
 
-        DBG_APP << "currentTime: " + std::to_string(currentTime.dbl()) << std::endl;
+        DBG_APP(this) << "currentTime: " + std::to_string(currentTime.dbl()) << std::endl;
         simtime_t validTo = messageSent + SimTime(messageValidity, SIMTIME_US);
-        DBG_APP << "validTo: " + std::to_string(validTo.dbl()) << std::endl;
+        DBG_APP(this) << "validTo: " + std::to_string(validTo.dbl()) << std::endl;
 
         // check if message is valid
         if (currentTime <= messageSent + SimTime(messageValidity, SIMTIME_US))
@@ -184,22 +183,22 @@ void NormalAppLayer_Secure::onWSM(WaveShortMessage* wsm) {
             Coord senderPosition = cbsm->getSenderPos();
             Coord senderVelocity = cbsm->getSenderSpeed();
 
-            DBG_APP << "Sender position: " + std::to_string(senderPosition.x) << std::endl;
-            DBG_APP << "My position: " + std::to_string(curPosition.x) << std::endl;
+            DBG_APP(this) << "Sender position: " + std::to_string(senderPosition.x) << std::endl;
+            DBG_APP(this) << "My position: " + std::to_string(curPosition.x) << std::endl;
 
-            DBG_APP << "Sender speed: " + std::to_string(senderVelocity.x) << std::endl;
-            DBG_APP << "My speed: " + std::to_string(curSpeed.x) << std::endl;
+            DBG_APP(this) << "Sender speed: " + std::to_string(senderVelocity.x) << std::endl;
+            DBG_APP(this) << "My speed: " + std::to_string(curSpeed.x) << std::endl;
 
             // https://en.wikipedia.org/wiki/Braking_distance
             // d_total = d_pr + -v^2/2a
             double perceptionReactionTime = 1.0;
             double perceptionReactionDistance = curSpeed.x * perceptionReactionTime;
-            double stoppingDistance = perceptionReactionDistance + (curSpeed.x * curSpeed.x)/(2*traciVehicle->getDecel());
+            double stoppingDistance = perceptionReactionDistance + (curSpeed.x * curSpeed.x)/(2*traciVehicle->getDeccel());
 
             if ((std::fabs(senderPosition.x - curPosition.x) < 100) && (cbsm->getEventIndicator() == 0) && (std::fabs(senderVelocity.x - curSpeed.x) > 1))
             {
-                DBG_APP << "Slowing down..." << std::endl;
-                DBG_APP << "Stopping distance: " + std::to_string(stoppingDistance) << std::endl;
+                DBG_APP(this) << "Slowing down..." << std::endl;
+                DBG_APP(this) << "Stopping distance: " + std::to_string(stoppingDistance) << std::endl;
 
                 // stop at the rightmost lane for 3 seconds after traveling the stopping distance
                 traciVehicle->stopAt(traciVehicle->getRoadId(), curPosition.x + stoppingDistance, 0, 0, 3);
@@ -207,7 +206,7 @@ void NormalAppLayer_Secure::onWSM(WaveShortMessage* wsm) {
         }
         else
         {
-            DBG_APP << "Message is not valid" << std::endl;
+            DBG_APP(this) << "Message is not valid" << std::endl;
         }
     }
 }
@@ -238,10 +237,10 @@ void NormalAppLayer_Secure::handleSelfMsg(cMessage* msg) {
                         }), neighborsList.end());
 
                 // debug, show my neighbors
-                DBG_APP << "MY NEIGHBORS" << std::endl;
+                DBG_APP(this) << "MY NEIGHBORS" << std::endl;
                 for (int i = 0; i < neighborsList.size(); i++)
                 {
-                    DBG_APP << "#" << i << ". " << neighborsList[i].lastUpdate << "\t[" << neighborsList[i].position.x << "," << neighborsList[i].position.y << "]\t+ " << neighborsList[i].repPositive << " / - " << neighborsList[i].repNegative << std::endl;
+                    DBG_APP(this) << "#" << i << ". " << neighborsList[i].lastUpdate << "\t[" << neighborsList[i].position.x << "," << neighborsList[i].position.y << "]\t+ " << neighborsList[i].repPositive << " / - " << neighborsList[i].repNegative << std::endl;
                 }
 
                 // adjusting speed to slower vehicles ahead
@@ -251,9 +250,9 @@ void NormalAppLayer_Secure::handleSelfMsg(cMessage* msg) {
                 // my stopping distance
                 double my_perceptionReactionTime = 1.0;
                 double my_perceptionReactionDistance = curSpeed.x * my_perceptionReactionTime;
-                double my_stoppingDistance = my_perceptionReactionDistance + (curSpeed.x * curSpeed.x)/(2*traciVehicle->getDecel());
+                double my_stoppingDistance = my_perceptionReactionDistance + (curSpeed.x * curSpeed.x)/(2*traciVehicle->getDeccel());
                 double my_stoppingPosition = my_x + my_stoppingDistance;
-                DBG_APP << "I am able to safely stop at [" << my_stoppingPosition << "," << my_y << "]" << std::endl;
+                DBG_APP(this) << "I am able to safely stop at [" << my_stoppingPosition << "," << my_y << "]" << std::endl;
 
                 int neighborIdx = -1;
                 double closestObstacle = my_stoppingPosition;
@@ -265,9 +264,9 @@ void NormalAppLayer_Secure::handleSelfMsg(cMessage* msg) {
                     // stopping distance of neighbor #i
                     double ah_perceptionReactionTime = 1.0;
                     double ah_perceptionReactionDistance = v * ah_perceptionReactionTime;
-                    double ah_stoppingDistance = ah_perceptionReactionDistance + (v * v)/(2*traciVehicle->getDecel());
+                    double ah_stoppingDistance = ah_perceptionReactionDistance + (v * v)/(2*traciVehicle->getDeccel());
                     double ah_stoppingPosition = neighborsList[i].position.x + ah_stoppingDistance;
-                    //DBG_APP << "Vehicle ahead may potentially stop at [" << ah_stoppingPosition << "," << neighborsList[i].position.y << "]" << std::endl;
+                    //DBG_APP(this) << "Vehicle ahead may potentially stop at [" << ah_stoppingPosition << "," << neighborsList[i].position.y << "]" << std::endl;
 
                     // neighbor #i is in front, in my lane and its stopping position is closer than currently closest obstacle
                     if (neighborsList[i].position.x > my_x
@@ -285,15 +284,15 @@ void NormalAppLayer_Secure::handleSelfMsg(cMessage* msg) {
                     // one of my neighbors is potential obstacle, reaction required
                     double v = neighborsList[neighborIdx].speed.x;
 
-                    DBG_APP << "Obstacle detected (" << neighborIdx << "); I should adjust my speed to the speed of vehicle ahead." << std::endl;
+                    DBG_APP(this) << "Obstacle detected (" << neighborIdx << "); I should adjust my speed to the speed of vehicle ahead." << std::endl;
                     traciVehicle->setSpeed(v);
-                    DBG_APP << "Changing speed from " << curSpeed.x << " m/s to " << v << "m/s." << std::endl;
+                    DBG_APP(this) << "Changing speed from " << curSpeed.x << " m/s to " << v << "m/s." << std::endl;
                 }
                 else
                 {
                     // no obstacles detected
                     traciVehicle->setSpeed(-1);
-                    DBG_APP << "No further action required. Continue with normal behavior." << std::endl;
+                    DBG_APP(this) << "No further action required. Continue with normal behavior." << std::endl;
                 }
 
                 // BSM beacon will be sent using base class method

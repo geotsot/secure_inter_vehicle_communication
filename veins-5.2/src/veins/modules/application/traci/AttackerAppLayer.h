@@ -4,6 +4,8 @@
 #include "veins/modules/application/ieee80211p/BaseWaveApplLayer.h"
 #include "veins/modules/messages/CustomBasicSafetyMessage_m.h"
 
+namespace veins {
+
 class AttackerAppLayer : public BaseWaveApplLayer {
 	public:
 		virtual void initialize(int stage);
@@ -17,5 +19,7 @@ class AttackerAppLayer : public BaseWaveApplLayer {
 
         virtual void handleSelfMsg(cMessage* msg);
 };
+
+} // namespace veins
 
 #endif

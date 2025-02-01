@@ -25,12 +25,14 @@
 #include "veins/modules/application/traci/TraCITestApp.h"
 #include "veins/modules/mobility/traci/TraCIColor.h"
 
-using Veins::TraCIMobility;
-using Veins::TraCIMobilityAccess;
+using namespace veins;
 
-using Veins::TraCITestApp;
+using veins::TraCIMobility;
+using veins::TraCIMobilityAccess;
 
-Define_Module(Veins::TraCITestApp);
+using veins::TraCITestApp;
+
+Define_Module(veins::TraCITestApp);
 
 const simsignalwrap_t TraCITestApp::mobilityStateChangedSignal = simsignalwrap_t(MIXIM_SIGNAL_MOBILITY_CHANGE_NAME);
 

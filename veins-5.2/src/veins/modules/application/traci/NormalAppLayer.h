@@ -5,6 +5,8 @@
 #include "veins/base/utils/Coord.h"
 #include <algorithm>
 
+namespace veins {
+
 class NormalAppLayer : public BaseWaveApplLayer {
     struct neighbor {
         simtime_t lastUpdate;
@@ -38,5 +40,7 @@ class NormalAppLayer : public BaseWaveApplLayer {
 
         virtual double getEuclideanDistance(Coord x1, Coord x2);
 };
+
+} // namespace veins
 
 #endif

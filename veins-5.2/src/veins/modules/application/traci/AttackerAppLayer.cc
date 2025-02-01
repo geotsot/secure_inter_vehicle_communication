@@ -1,5 +1,7 @@
 #include "AttackerAppLayer.h"
 
+using namespace veins;
+
 Define_Module(AttackerAppLayer);
 
 void AttackerAppLayer::initialize(int stage) {
@@ -12,11 +14,11 @@ void AttackerAppLayer::initialize(int stage) {
 }
 
 void AttackerAppLayer::onWSM(WaveShortMessage* wsm) {
-    DBG_APP << "received a WSM" << std::endl;
+    DBG_APP(this) << "received a WSM" << std::endl;
     if (CustomBasicSafetyMessage* cbsm = dynamic_cast<CustomBasicSafetyMessage*>(wsm)) {
         if (cbsm->getEventIndicator() == 0)
         {
-            DBG_APP << "Message saved for repeating..." << std::endl;
+            DBG_APP(this) << "Message saved for repeating..." << std::endl;
             msgStack.push_back(cbsm->dup());
         }
     }
@@ -26,7 +28,7 @@ void AttackerAppLayer::handleSelfMsg(cMessage* msg) {
     // replay attack will be performed periodically after beacon interval
     if (msg->getKind() == SEND_BEACON_EVT)
     {
-        DBG_APP << "Replay attack triggered..." << std::endl;
+        DBG_APP(this) << "Replay attack triggered..." << std::endl;
 
         Coord myPosition = curPosition;
         double minDiff = 0;
@@ -34,7 +36,7 @@ void AttackerAppLayer::handleSelfMsg(cMessage* msg) {
 
         if (msgStack.size() > 0)
         {
-            DBG_APP << "Messages in stack: " + std::to_string(msgStack.size()) << std::endl;
+            DBG_APP(this) << "Messages in stack: " + std::to_string(msgStack.size()) << std::endl;
 
             minDiff = std::fabs(msgStack[0]->getSenderPos().x - myPosition.x);
 
@@ -51,7 +53,7 @@ void AttackerAppLayer::handleSelfMsg(cMessage* msg) {
                 }
             }
 
-            DBG_APP << "Repeating message #" + std::to_string(index) << std::endl;
+            DBG_APP(this) << "Repeating message #" + std::to_string(index) << std::endl;
 
             // repeat message with sender position closest to my current position
             sendDown(msgStack[index]->dup());
