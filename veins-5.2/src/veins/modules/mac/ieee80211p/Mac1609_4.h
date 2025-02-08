@@ -24,18 +24,21 @@
 
 #include <queue>
 #include <memory>
+#include <omnetpp.h>
 #include <stdint.h>
 
 #include "veins/veins.h"
 
 #include "veins/base/modules/BaseLayer.h"
 #include "veins/modules/phy/PhyLayer80211p.h"
-#include "veins/modules/mac/ieee80211p/DemoBaseApplLayerToMac1609_4Interface.h"
+//#include "veins/modules/mac/ieee80211p/DemoBaseApplLayerToMac1609_4Interface.h"
+#include "veins/modules/mac/ieee80211p/WaveAppToMac1609_4Interface.h"
 #include "veins/modules/utility/Consts80211p.h"
 #include "veins/modules/utility/MacToPhyControlInfo11p.h"
 #include "veins/base/utils/FindModule.h"
 #include "veins/modules/messages/Mac80211Pkt_m.h"
-#include "veins/modules/messages/BaseFrame1609_4_m.h"
+//#include "veins/modules/messages/BaseFrame1609_4_m.h"
+#include "veins/modules/messages/WaveShortMessage_m.h"
 #include "veins/modules/messages/AckTimeOutMessage_m.h"
 #include "veins/modules/messages/Mac80211Ack_m.h"
 #include "veins/base/modules/BaseMacLayer.h"
@@ -65,7 +68,7 @@ namespace veins {
 
 class DeciderResult80211;
 
-class VEINS_API Mac1609_4 : public BaseMacLayer, public DemoBaseApplLayerToMac1609_4Interface {
+class VEINS_API Mac1609_4 : public BaseMacLayer, public WaveAppToMac1609_4Interface {
 
 public:
     // tell to anybody which is interested when the channel turns busy or idle
@@ -91,7 +94,7 @@ public:
     public:
         class VEINS_API EDCAQueue {
         public:
-            std::queue<BaseFrame1609_4*> queue;
+            std::queue<WaveShortMessage*> queue;
             int aifsn; // number of aifs slots for this queue
             int cwMin; // minimum contention window
             int cwMax; // maximum contention size
@@ -115,15 +118,15 @@ public:
         ~EDCA();
 
         void createQueue(int aifsn, int cwMin, int cwMax, t_access_category);
-        int queuePacket(t_access_category AC, BaseFrame1609_4* cmsg);
+        int queuePacket(t_access_category AC, WaveShortMessage* cmsg);
         void backoff(t_access_category ac);
         simtime_t startContent(simtime_t idleSince, bool guardActive);
         void stopContent(bool allowBackoff, bool generateTxOp);
-        void postTransmit(t_access_category, BaseFrame1609_4* wsm, bool useAcks);
+        void postTransmit(t_access_category, WaveShortMessage* wsm, bool useAcks);
         void revokeTxOPs();
 
         /** @brief return the next packet to send, send all lower Queues into backoff */
-        BaseFrame1609_4* initiateTransmit(simtime_t idleSince);
+        WaveShortMessage* initiateTransmit(simtime_t idleSince);
 
     public:
         cSimpleModule* owner;
@@ -232,7 +235,7 @@ protected:
     void setParametersForBitrate(uint64_t bitrate);
 
     void sendAck(LAddress::L2Type recpAddress, unsigned long wsmId);
-    void handleUnicast(LAddress::L2Type srcAddr, std::unique_ptr<BaseFrame1609_4> wsm);
+    void handleUnicast(LAddress::L2Type srcAddr, std::unique_ptr<WaveShortMessage> wsm);
     void handleAck(const Mac80211Ack* ack);
     void handleAckTimeOut(AckTimeOutMessage* ackTimeOutMsg);
     void handleRetransmit(t_access_category ac);
@@ -261,7 +264,7 @@ protected:
     t_access_category lastAC;
 
     /** @brief pointer to last sent packet */
-    BaseFrame1609_4* lastWSM;
+    WaveShortMessage* lastWSM;
 
     /** @brief pointer to last sent mac frame */
     std::unique_ptr<Mac80211Pkt> lastMac;
@@ -290,8 +293,17 @@ protected:
     long statsSlotsBackoff;
     simtime_t statsTotalBusyTime;
 
+    /** @brief This MAC layers MAC address.*/
+    int myMacAddress;
+
     /** @brief The power (in mW) to transmit with.*/
     double txPower;
+
+    /** @brief the bit rate at which we transmit */
+    uint64_t bitrate;
+
+    /** @brief N_DBPS, derived from bitrate, for frame length calculation */
+    double n_dbps;
 
     MCS mcs; ///< Modulation and coding scheme to use unless explicitly specified.
 
@@ -318,6 +330,11 @@ protected:
     std::set<unsigned long> handledUnicastToApp;
 
     Mac80211pToPhy11pInterface* phy11p;
+
+    //tell to anybody which is interested when the channel turns busy or idle
+    // simsignal_t sigChannelBusy;
+    //tell to anybody which is interested when a collision occurred
+    // simsignal_t sigCollision;
 };
 
 } // namespace veins

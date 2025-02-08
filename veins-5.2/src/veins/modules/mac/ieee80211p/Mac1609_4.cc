@@ -51,10 +51,16 @@ void Mac1609_4::initialize(int stage)
 
         // this is required to circumvent double precision issues with constants from CONST80211p.h
         ASSERT(simTime().getScaleExp() == -12);
+        // sigChannelBusy = registerSignal("sigChannelBusy");
+        // sigCollision = registerSignal("sigCollision");
 
         txPower = par("txPower").doubleValue();
         int bitrate = par("bitrate");
+        n_dbps = 0;
         setParametersForBitrate(bitrate);
+
+        //mac-adresses
+        myMacAddress = intuniform(0,0xFFFFFFFE);
 
         // unicast parameters
         dot11RTSThreshold = par("dot11RTSThreshold");
@@ -70,6 +76,16 @@ void Mac1609_4::initialize(int stage)
         stopIgnoreChannelStateMsg = new cMessage("ChannelStateMsg");
 
         myId = getParentModule()->getParentModule()->getFullPath();
+
+        //create frequency mappings
+//        frequency.insert(std::pair<int, double>(Channels::CRIT_SOL, 5.86e9));
+//        frequency.insert(std::pair<int, double>(Channels::SCH1, 5.87e9));
+//        frequency.insert(std::pair<int, double>(Channels::SCH2, 5.88e9));
+//        frequency.insert(std::pair<int, double>(Channels::CCH, 5.89e9));
+//        frequency.insert(std::pair<int, double>(Channels::SCH3, 5.90e9));
+//        frequency.insert(std::pair<int, double>(Channels::SCH4, 5.91e9));
+//        frequency.insert(std::pair<int, double>(Channels::HPPS, 5.92e9));
+
         // create two edca systems
 
         myEDCA[ChannelType::control] = make_unique<EDCA>(this, ChannelType::control, par("queueSize"));
@@ -199,7 +215,7 @@ void Mac1609_4::handleSelfMsg(cMessage* msg)
 
         // we actually came to the point where we can send a packet
         channelBusySelf(true);
-        BaseFrame1609_4* pktToSend = myEDCA[activeChannel]->initiateTransmit(lastIdle);
+        WaveShortMessage* pktToSend = myEDCA[activeChannel]->initiateTransmit(lastIdle);
         ASSERT(pktToSend);
 
         lastAC = mapUserPriority(pktToSend->getUserPriority());
@@ -280,7 +296,7 @@ void Mac1609_4::handleUpperControl(cMessage* msg)
 void Mac1609_4::handleUpperMsg(cMessage* msg)
 {
 
-    BaseFrame1609_4* thisMsg = check_and_cast<BaseFrame1609_4*>(msg);
+    WaveShortMessage* thisMsg = check_and_cast<WaveShortMessage*>(msg);
 
     t_access_category ac = mapUserPriority(thisMsg->getUserPriority());
 
@@ -554,7 +570,7 @@ void Mac1609_4::setCCAThreshold(double ccaThreshold_dBm)
 void Mac1609_4::handleBroadcast(Mac80211Pkt* macPkt, DeciderResult80211* res)
 {
     statsReceivedBroadcasts++;
-    unique_ptr<BaseFrame1609_4> wsm(check_and_cast<BaseFrame1609_4*>(macPkt->decapsulate()));
+    unique_ptr<WaveShortMessage> wsm(check_and_cast<WaveShortMessage*>(macPkt->decapsulate()));
     auto ctrlInfo = new PhyToMacControlInfo(res);
     ctrlInfo->setSourceAddress(macPkt->getSrcAddr());
     wsm->setControlInfo(ctrlInfo);
@@ -587,7 +603,7 @@ void Mac1609_4::handleLowerMsg(cMessage* msg)
         }
         else {
             if (frameReceived) {
-                unique_ptr<BaseFrame1609_4> wsm(check_and_cast<BaseFrame1609_4*>(macPkt->decapsulate()));
+                unique_ptr<WaveShortMessage> wsm(check_and_cast<WaveShortMessage*>(macPkt->decapsulate()));
                 auto ctrlInfo = new PhyToMacControlInfo(res);
                 ctrlInfo->setSourceAddress(macPkt->getSrcAddr());
                 wsm->setControlInfo(ctrlInfo);
@@ -623,7 +639,7 @@ void Mac1609_4::handleLowerMsg(cMessage* msg)
     }
 }
 
-int Mac1609_4::EDCA::queuePacket(t_access_category ac, BaseFrame1609_4* msg)
+int Mac1609_4::EDCA::queuePacket(t_access_category ac, WaveShortMessage* msg)
 {
 
     if (maxQueueSize && myQueues[ac].queue.size() >= maxQueueSize) {
@@ -672,11 +688,11 @@ Mac1609_4::t_access_category Mac1609_4::mapUserPriority(int prio)
     return AC_VO;
 }
 
-BaseFrame1609_4* Mac1609_4::EDCA::initiateTransmit(simtime_t lastIdle)
+WaveShortMessage* Mac1609_4::EDCA::initiateTransmit(simtime_t lastIdle)
 {
 
     // iterate through the queues to return the packet we want to send
-    BaseFrame1609_4* pktToSend = nullptr;
+    WaveShortMessage* pktToSend = nullptr;
 
     simtime_t idleTime = simTime() - lastIdle;
 
@@ -831,7 +847,7 @@ void Mac1609_4::EDCA::backoff(t_access_category ac)
     EV_TRACE << "Going into Backoff because channel was busy when new packet arrived from upperLayer" << std::endl;
 }
 
-void Mac1609_4::EDCA::postTransmit(t_access_category ac, BaseFrame1609_4* wsm, bool useAcks)
+void Mac1609_4::EDCA::postTransmit(t_access_category ac, WaveShortMessage* wsm, bool useAcks)
 {
     bool holBlocking = (wsm->getRecipientAddress() != LAddress::L2BROADCAST()) && useAcks;
     if (holBlocking) {
@@ -1035,7 +1051,7 @@ void Mac1609_4::sendAck(LAddress::L2Type recpAddress, unsigned long wsmId)
     scheduleAt(simTime() + SIFS_11P, stopIgnoreChannelStateMsg);
 }
 
-void Mac1609_4::handleUnicast(LAddress::L2Type srcAddr, unique_ptr<BaseFrame1609_4> wsm)
+void Mac1609_4::handleUnicast(LAddress::L2Type srcAddr, unique_ptr<WaveShortMessage> wsm)
 {
     if (useAcks) {
         sendAck(srcAddr, wsm->getTreeId());
@@ -1061,7 +1077,7 @@ void Mac1609_4::handleAck(const Mac80211Ack* ack)
         auto& accessCategory = p.first;
         auto& edcaQueue = p.second;
         if (edcaQueue.queue.size() > 0 && edcaQueue.waitForAck && (edcaQueue.waitOnUnicastID == ack->getMessageId())) {
-            BaseFrame1609_4* wsm = edcaQueue.queue.front();
+            WaveShortMessage* wsm = edcaQueue.queue.front();
             edcaQueue.queue.pop();
             delete wsm;
             myEDCA[chan]->myQueues[accessCategory].cwCur = myEDCA[chan]->myQueues[accessCategory].cwMin;
@@ -1113,7 +1129,7 @@ void Mac1609_4::handleRetransmit(t_access_category ac)
     if (myEDCA[ChannelType::control]->myQueues[ac].queue.size() == 0) {
         throw cRuntimeError("Trying retransmission on empty queue...");
     }
-    BaseFrame1609_4* appPkt = myEDCA[ChannelType::control]->myQueues[ac].queue.front();
+    WaveShortMessage* appPkt = myEDCA[ChannelType::control]->myQueues[ac].queue.front();
     bool contend = false;
     bool retriesExceeded = false;
     // page 879 of IEEE 802.11-2012

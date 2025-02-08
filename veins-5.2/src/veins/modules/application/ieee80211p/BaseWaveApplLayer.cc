@@ -21,12 +21,12 @@
 //
 
 #include "veins/modules/application/ieee80211p/BaseWaveApplLayer.h"
-#include "veins/base/utils/MiXiMDefs.h"
+//#include "veins/base/utils/MiXiMDefs.h"
 
 using namespace veins;
 
-const simsignalwrap_t BaseWaveApplLayer::mobilityStateChangedSignal = simsignalwrap_t(MIXIM_SIGNAL_MOBILITY_CHANGE_NAME);
-const simsignalwrap_t BaseWaveApplLayer::parkingStateChangedSignal = simsignalwrap_t(TRACI_SIGNAL_PARKING_CHANGE_NAME);
+//const simsignalwrap_t BaseWaveApplLayer::mobilityStateChangedSignal = simsignalwrap_t(MIXIM_SIGNAL_MOBILITY_CHANGE_NAME);
+//const simsignalwrap_t BaseWaveApplLayer::parkingStateChangedSignal = simsignalwrap_t(TRACI_SIGNAL_PARKING_CHANGE_NAME);
 
 void BaseWaveApplLayer::initialize(int stage)
 {
@@ -86,6 +86,9 @@ void BaseWaveApplLayer::initialize(int stage)
         receivedWSMs = 0;
     }
     else if (stage == 1) {
+
+        // store MAC address for quick access
+        myId = mac->getMACAddress();
 
         // simulate asynchronous channel access
 
@@ -210,15 +213,28 @@ void BaseWaveApplLayer::handlePositionUpdate(cObject* obj)
 void BaseWaveApplLayer::handleParkingUpdate(cObject* obj)
 {
     isParked = mobility->getParkingState();
-    // if (communicateWhileParked == false) {
-    //     if (isParked == true) {
-    //         (FindModule<BaseConnectionManager*>::findGlobalModule())->unregisterNic(this->getParentModule()->getSubmodule("nic"));
-    //     }
-    //     else {
-    //         Coord pos = mobility->getCurrentDirection();
-    //         (FindModule<BaseConnectionManager*>::findGlobalModule())->registerNic(this->getParentModule()->getSubmodule("nic"), (ChannelAccess*) this->getParentModule()->getSubmodule("nic")->getSubmodule("phy80211p"), &pos);
-    //     }
-    // }
+    if (communicateWhileParked == false) {
+        if (isParked == true) {
+            (FindModule<BaseConnectionManager*>::findGlobalModule())->unregisterNic(this->getParentModule()->getSubmodule("nic"));
+        } else {
+            Coord direction = mobility->getCurrentDirection();
+
+            Heading heading;
+            if (direction.x == 0 && direction.y == 0) {
+                EV_WARN << "Vehicle speed is zero, using default heading." << endl;
+                heading = Heading(0.0); // Default heading (0 degrees).
+            } else {
+                double headingRadians = atan2(direction.y, direction.x);  // Calculate angle
+                double headingDegrees = headingRadians * 180.0 / M_PI; // Convert to degrees
+                heading = Heading(headingDegrees);
+            }
+
+            // ***KEY CHANGE: Use getPositionAt(simTime())***
+            Coord pos = mobility->getPositionAt(simTime());
+
+            (FindModule<BaseConnectionManager*>::findGlobalModule())->registerNic(this->getParentModule()->getSubmodule("nic"), (ChannelAccess*)this->getParentModule()->getSubmodule("nic")->getSubmodule("phy80211p"), pos, heading);
+        }
+    }
 }
 
 void BaseWaveApplLayer::handleLowerMsg(cMessage* msg)
