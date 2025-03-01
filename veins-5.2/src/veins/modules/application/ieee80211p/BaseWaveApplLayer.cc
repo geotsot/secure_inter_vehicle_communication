@@ -217,22 +217,8 @@ void BaseWaveApplLayer::handleParkingUpdate(cObject* obj)
         if (isParked == true) {
             (FindModule<BaseConnectionManager*>::findGlobalModule())->unregisterNic(this->getParentModule()->getSubmodule("nic"));
         } else {
-            Coord direction = mobility->getCurrentDirection();
-
-            Heading heading;
-            if (direction.x == 0 && direction.y == 0) {
-                EV_WARN << "Vehicle speed is zero, using default heading." << endl;
-                heading = Heading(0.0); // Default heading (0 degrees).
-            } else {
-                double headingRadians = atan2(direction.y, direction.x);  // Calculate angle
-                double headingDegrees = headingRadians * 180.0 / M_PI; // Convert to degrees
-                heading = Heading(headingDegrees);
-            }
-
-            // ***KEY CHANGE: Use getPositionAt(simTime())***
             Coord pos = mobility->getPositionAt(simTime());
-
-            (FindModule<BaseConnectionManager*>::findGlobalModule())->registerNic(this->getParentModule()->getSubmodule("nic"), (ChannelAccess*)this->getParentModule()->getSubmodule("nic")->getSubmodule("phy80211p"), pos, heading);
+            (FindModule<BaseConnectionManager*>::findGlobalModule())->registerNic(this->getParentModule()->getSubmodule("nic"), (ChannelAccess*) this->getParentModule()->getSubmodule("nic")->getSubmodule("phy80211p"), pos, mobility->getHeading());
         }
     }
 }
