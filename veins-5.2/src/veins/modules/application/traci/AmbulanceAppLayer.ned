@@ -19,12 +19,11 @@
 //
 
 package org.car2x.veins.modules.application.traci;
-import org.car2x.veins.modules.application.ieee80211p.BaseWaveApplLayer;
+import org.car2x.veins.modules.application.ieee80211p.DemoBaseApplLayer;
 
-simple AmbulanceAppLayer extends BaseWaveApplLayer
+simple AmbulanceAppLayer extends DemoBaseApplLayer
 {
-    parameters:
-        @class(AmbulanceAppLayer);
-        @display("i=block/app2");
-        int messageLength = default(60);
+    @class(veins::AmbulanceAppLayer);
+    @display("i=block/app2");
+    int messageLength = default(60);
 }

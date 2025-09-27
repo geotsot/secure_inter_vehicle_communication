@@ -19,11 +19,11 @@
 //
 
 package org.car2x.veins.modules.application.traci;
-import org.car2x.veins.modules.application.ieee80211p.BaseWaveApplLayer;
+import org.car2x.veins.modules.application.ieee80211p.DemoBaseApplLayer;
 
-simple NormalAppLayer_Secure extends BaseWaveApplLayer
+simple NormalAppLayer_Secure extends DemoBaseApplLayer
 {
-    @class(NormalAppLayer_Secure);
+    @class(veins::NormalAppLayer_Secure);
     @display("i=block/app2");
     int messageLength = default(256);
     double signDelay = default(0);

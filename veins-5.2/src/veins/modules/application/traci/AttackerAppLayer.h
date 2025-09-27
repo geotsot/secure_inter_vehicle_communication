@@ -1,10 +1,15 @@
-#ifndef AttackerAppLayer_H
-#define AttackerAppLayer_H
+#pragma once
 
-#include "veins/modules/application/ieee80211p/BaseWaveApplLayer.h"
+#include "veins/veins.h"
+
+#include "veins/modules/application/ieee80211p/DemoBaseApplLayer.h"
 #include "veins/modules/messages/CustomBasicSafetyMessage_m.h"
 
-class AttackerAppLayer : public BaseWaveApplLayer {
+using namespace omnetpp;
+
+namespace veins {
+
+class VEINS_API AttackerAppLayer : public DemoBaseApplLayer {
 	public:
 		virtual void initialize(int stage);
 	protected:
@@ -13,9 +18,9 @@ class AttackerAppLayer : public BaseWaveApplLayer {
 		int currentSubscribedServiceId;
 		std::vector<CustomBasicSafetyMessage*> msgStack;
 	protected:
-        virtual void onWSM(WaveShortMessage* wsm);
+        virtual void onWSM(BaseFrame1609_4* wsm);
 
         virtual void handleSelfMsg(cMessage* msg);
 };
 
-#endif
+}

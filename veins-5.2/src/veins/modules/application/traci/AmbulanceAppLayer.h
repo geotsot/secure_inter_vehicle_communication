@@ -1,9 +1,14 @@
-#ifndef AmbulanceAppLayer_H
-#define AmbulanceAppLayer_H
+#pragma once
 
-#include "veins/modules/application/ieee80211p/BaseWaveApplLayer.h"
+#include "veins/veins.h"
 
-class AmbulanceAppLayer : public BaseWaveApplLayer {
+#include "veins/modules/application/ieee80211p/DemoBaseApplLayer.h"
+
+using namespace omnetpp;
+
+namespace veins {
+
+class VEINS_API AmbulanceAppLayer : public DemoBaseApplLayer {
 	public:
 		virtual void initialize(int stage);
 	protected:
@@ -16,4 +21,4 @@ class AmbulanceAppLayer : public BaseWaveApplLayer {
         virtual void handleSelfMsg(cMessage* msg);
 };
 
-#endif
+}

@@ -1,9 +1,11 @@
-#include "AttackerAppLayer_Sybil.h"
+#include "veins/modules/application/traci/AttackerAppLayer_Sybil.h"
 
-Define_Module(AttackerAppLayer_Sybil);
+using namespace veins;
+
+Define_Module(veins::AttackerAppLayer_Sybil);
 
 void AttackerAppLayer_Sybil::initialize(int stage) {
-    BaseWaveApplLayer::initialize(stage);
+    DemoBaseApplLayer::initialize(stage);
     if (stage == 0) {
         sentMessage = false;
         lastDroveAt = simTime();
@@ -11,16 +13,16 @@ void AttackerAppLayer_Sybil::initialize(int stage) {
     }
 }
 
-void AttackerAppLayer_Sybil::onBSM(BasicSafetyMessage* bsm) {
+void AttackerAppLayer_Sybil::onBSM(DemoSafetyMessage* bsm) {
     double my_x = curPosition.x;
     double my_y = curPosition.y;
 
     simtime_t currentTime = simTime();
-    Coord& currentPosition = bsm->getSenderPos();
+    Coord currentPosition = bsm->getSenderPos();
     double currentPositionX = currentPosition.x;
     double currentPositionY = currentPosition.y;
 
-    DBG_APP << "Sybil attacker received a BSM at " << currentTime.dbl() << std::endl;
+    EV_TRACE << "Sybil attacker received a BSM at " << currentTime.dbl() << std::endl;
 
     double threshold = 10;
 
@@ -34,19 +36,19 @@ void AttackerAppLayer_Sybil::onBSM(BasicSafetyMessage* bsm) {
             simtime_t messageSent = lastReportedPosition[i]->getTimestamp();
             simtime_t t = currentTime - messageSent;
 
-            Coord& velocity = lastReportedPosition[i]->getSenderSpeed();
+            Coord velocity = lastReportedPosition[i]->getSenderSpeed();
             double v = velocity.x;
 
             double s = v * t.dbl();
 
-            Coord& pastPosition = lastReportedPosition[i]->getSenderPos();
+            Coord pastPosition = lastReportedPosition[i]->getSenderPos();
 
             double expectedPositionX = s + pastPosition.x;
             double expectedPositionY = pastPosition.y;
 
             double euclideanDistance = sqrt(pow(currentPositionX - expectedPositionX, 2) + pow(currentPositionY - expectedPositionY, 2));
 
-            DBG_APP << "euclideanDistance: " << euclideanDistance << std::endl;
+            EV_TRACE << "euclideanDistance: " << euclideanDistance << std::endl;
             if (euclideanDistance < minEuclideanDistance)
             {
                 minEuclideanDistance = euclideanDistance;
@@ -54,30 +56,30 @@ void AttackerAppLayer_Sybil::onBSM(BasicSafetyMessage* bsm) {
             }
         }
 
-        DBG_APP << "Victim position: " << currentPositionX << "," << currentPositionY << std::endl;
+        EV_TRACE << "Victim position: " << currentPositionX << "," << currentPositionY << std::endl;
 
         if (minEuclideanDistance < threshold
             && msgStack[index]->getTimestamp() > currentTime - SimTime(3, SIMTIME_S)
             && msgStack[index]->getSenderPos().x > currentPositionX)
         {
-            DBG_APP << "I have already attacked this vehicle, so I should use existing Sybil identity." << std::endl;
+            EV_TRACE << "I have already attacked this vehicle, so I should use existing Sybil identity." << std::endl;
 
             lastReportedPosition[index] = bsm->dup();
-            BasicSafetyMessage* bsmPt1 = new BasicSafetyMessage();
+            DemoSafetyMessage* bsmPt1 = new DemoSafetyMessage();
             populateWSM(bsmPt1);
             bsmPt1->setSenderPos(msgStack[index]->getSenderPos());
             bsmPt1->setSenderSpeed(msgStack[index]->getSenderSpeed());
             msgStack[index]->setTimestamp(currentTime);
 
-            DBG_APP << "Sybil node position: " << bsmPt1->getSenderPos().x << "," << bsmPt1->getSenderPos().y << std::endl;
+            EV_TRACE << "Sybil node position: " << bsmPt1->getSenderPos().x << "," << bsmPt1->getSenderPos().y << std::endl;
 
             sendDown(bsmPt1);
         }
         else
         {
-            DBG_APP << "New vehicle detected. Fabricating new Sybil identity..." << std::endl;
+            EV_TRACE << "New vehicle detected. Fabricating new Sybil identity..." << std::endl;
 
-            Coord& currentVelocity = bsm->getSenderSpeed();
+            Coord currentVelocity = bsm->getSenderSpeed();
             double currentV = currentVelocity.x;
 
             simtime_t newTimestamp = bsm->getTimestamp();
@@ -91,12 +93,12 @@ void AttackerAppLayer_Sybil::onBSM(BasicSafetyMessage* bsm) {
             double deceleration = 3; // m/s^2, slightly harsher braking than comfortable
             double stoppingDistance = deliveryDistance + perceptionReactionDistance + (currentV * currentV)/(2*deceleration) + margin;
 
-            BasicSafetyMessage* bsmPt1 = new BasicSafetyMessage();
+            DemoSafetyMessage* bsmPt1 = new DemoSafetyMessage();
             populateWSM(bsmPt1);
             bsmPt1->setSenderPos(Coord(currentPositionX + stoppingDistance, currentPositionY));
             bsmPt1->setSenderSpeed(Coord(0, 0));
 
-            DBG_APP << "Sybil node position: " << bsmPt1->getSenderPos().x << "," << bsmPt1->getSenderPos().y << std::endl;
+            EV_TRACE << "Sybil node position: " << bsmPt1->getSenderPos().x << "," << bsmPt1->getSenderPos().y << std::endl;
 
             lastReportedPosition.push_back(bsm->dup());
             msgStack.push_back(bsmPt1->dup());
@@ -106,6 +108,6 @@ void AttackerAppLayer_Sybil::onBSM(BasicSafetyMessage* bsm) {
     }
     else
     {
-        DBG_APP << "Sender of the BSM is more than 10 meters behind. No attack will be performed." << std::endl;
+        EV_TRACE << "Sender of the BSM is more than 10 meters behind. No attack will be performed." << std::endl;
     }
 }

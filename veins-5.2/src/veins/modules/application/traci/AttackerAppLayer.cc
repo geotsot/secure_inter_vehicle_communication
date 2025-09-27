@@ -1,9 +1,11 @@
-#include "AttackerAppLayer.h"
+#include "veins/modules/application/traci/AttackerAppLayer.h"
 
-Define_Module(AttackerAppLayer);
+using namespace veins;
+
+Define_Module(veins::AttackerAppLayer);
 
 void AttackerAppLayer::initialize(int stage) {
-    BaseWaveApplLayer::initialize(stage);
+    DemoBaseApplLayer::initialize(stage);
     if (stage == 0) {
         sentMessage = false;
         lastDroveAt = simTime();
@@ -11,12 +13,12 @@ void AttackerAppLayer::initialize(int stage) {
     }
 }
 
-void AttackerAppLayer::onWSM(WaveShortMessage* wsm) {
-    DBG_APP << "received a WSM" << std::endl;
+void AttackerAppLayer::onWSM(BaseFrame1609_4* wsm) {
+    EV_DEBUG << "received a WSM" << std::endl;
     if (CustomBasicSafetyMessage* cbsm = dynamic_cast<CustomBasicSafetyMessage*>(wsm)) {
         if (cbsm->getEventIndicator() == 0)
         {
-            DBG_APP << "Message saved for repeating..." << std::endl;
+            EV_DEBUG << "Message saved for repeating..." << std::endl;
             msgStack.push_back(cbsm->dup());
         }
     }
@@ -26,7 +28,7 @@ void AttackerAppLayer::handleSelfMsg(cMessage* msg) {
     // replay attack will be performed periodically after beacon interval
     if (msg->getKind() == SEND_BEACON_EVT)
     {
-        DBG_APP << "Replay attack triggered..." << std::endl;
+        EV_DEBUG << "Replay attack triggered..." << std::endl;
 
         Coord myPosition = curPosition;
         double minDiff = 0;
@@ -34,7 +36,7 @@ void AttackerAppLayer::handleSelfMsg(cMessage* msg) {
 
         if (msgStack.size() > 0)
         {
-            DBG_APP << "Messages in stack: " + std::to_string(msgStack.size()) << std::endl;
+            EV_DEBUG << "Messages in stack: " + std::to_string(msgStack.size()) << std::endl;
 
             minDiff = std::fabs(msgStack[0]->getSenderPos().x - myPosition.x);
 
@@ -51,7 +53,7 @@ void AttackerAppLayer::handleSelfMsg(cMessage* msg) {
                 }
             }
 
-            DBG_APP << "Repeating message #" + std::to_string(index) << std::endl;
+            EV_DEBUG << "Repeating message #" + std::to_string(index) << std::endl;
 
             // repeat message with sender position closest to my current position
             sendDown(msgStack[index]->dup());
@@ -61,7 +63,7 @@ void AttackerAppLayer::handleSelfMsg(cMessage* msg) {
         {
             // if there is no message to replay, BSM beacon
             // will be broadcasted to keep beaconing alive
-            BasicSafetyMessage* bsm = new BasicSafetyMessage();
+            DemoSafetyMessage* bsm = new DemoSafetyMessage();
             populateWSM(bsm);
             sendDown(bsm);
             scheduleAt(simTime() + beaconInterval, sendBeaconEvt);

@@ -19,15 +19,14 @@
 //
 
 package org.car2x.veins.modules.application.traci;
-import org.car2x.veins.modules.application.ieee80211p.BaseWaveApplLayer;
+import org.car2x.veins.modules.application.ieee80211p.DemoBaseApplLayer;
 
-simple AmbulanceAppLayer_Secure extends BaseWaveApplLayer
+simple AmbulanceAppLayer_Secure extends DemoBaseApplLayer
 {
-    parameters:
-        @class(AmbulanceAppLayer_Secure);
-        @display("i=block/app2");
-        int messageLength = default(158);
-        int messageValidity = default(300);
-		double signDelay = default(0);
-		double verifyDelay = default(0);
+    @class(veins::AmbulanceAppLayer_Secure);
+    @display("i=block/app2");
+    int messageLength = default(158);
+    int messageValidity = default(300);
+	double signDelay = default(0);
+	double verifyDelay = default(0);
 }

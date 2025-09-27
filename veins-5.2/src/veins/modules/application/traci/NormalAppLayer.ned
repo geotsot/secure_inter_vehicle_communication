@@ -19,11 +19,11 @@
 //
 
 package org.car2x.veins.modules.application.traci;
-import org.car2x.veins.modules.application.ieee80211p.BaseWaveApplLayer;
+import org.car2x.veins.modules.application.ieee80211p.DemoBaseApplLayer;
 
-simple NormalAppLayer extends BaseWaveApplLayer
+simple NormalAppLayer extends DemoBaseApplLayer
 {
-    @class(NormalAppLayer);
+    @class(veins::NormalAppLayer);
     @display("i=block/app2");
     int messageLength = default(58);
 }

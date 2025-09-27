@@ -1,19 +1,24 @@
-#ifndef AttackerAppLayer_Sybil_H
-#define AttackerAppLayer_Sybil_H
+#pragma once
 
-#include "veins/modules/application/ieee80211p/BaseWaveApplLayer.h"
+#include "veins/veins.h"
 
-class AttackerAppLayer_Sybil : public BaseWaveApplLayer {
+#include "veins/modules/application/ieee80211p/DemoBaseApplLayer.h"
+
+using namespace omnetpp;
+
+namespace veins {
+
+class VEINS_API AttackerAppLayer_Sybil : public DemoBaseApplLayer {
 	public:
 		virtual void initialize(int stage);
 	protected:
 		simtime_t lastDroveAt;
 		bool sentMessage;
 		int currentSubscribedServiceId;
-		std::vector<BasicSafetyMessage*> msgStack;
-		std::vector<BasicSafetyMessage*> lastReportedPosition;
+		std::vector<DemoSafetyMessage*> msgStack;
+		std::vector<DemoSafetyMessage*> lastReportedPosition;
 	protected:
-        virtual void onBSM(BasicSafetyMessage* bsm);
+        virtual void onBSM(DemoSafetyMessage* bsm);
 };
 
-#endif
+}

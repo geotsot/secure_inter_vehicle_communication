@@ -1,17 +1,19 @@
-#include "AmbulanceAppLayer_Secure.h"
+#include "veins/modules/application/traci/AmbulanceAppLayer_Secure.h"
 #include "veins/modules/messages/CustomBasicSafetyMessage_m.h"
 
-Define_Module(AmbulanceAppLayer_Secure);
+using namespace veins;
+
+Define_Module(veins::AmbulanceAppLayer_Secure);
 
 void AmbulanceAppLayer_Secure::initialize(int stage) {
-    BaseWaveApplLayer::initialize(stage);
+    DemoBaseApplLayer::initialize(stage);
     if (stage == 0) {
         sentMessage = false;
         lastDroveAt = simTime();
         currentSubscribedServiceId = -1;
 
-        messageLength = par("messageLength").longValue();
-        messageValidity = par("messageValidity").longValue();
+        messageLength = par("messageLength");
+        messageValidity = par("messageValidity");
 
         signDelay = par("signDelay").doubleValue();
         verifyDelay = par("verifyDelay").doubleValue();
@@ -23,7 +25,7 @@ void AmbulanceAppLayer_Secure::handleSelfMsg(cMessage* msg) {
     // will be disseminated periodically after beacon interval
     if (msg->getKind() == SEND_BEACON_EVT)
     {
-        DBG_APP << "Broadcasting emergency event..." << std::endl;
+        EV_DEBUG << "Broadcasting emergency event..." << std::endl;
 
         CustomBasicSafetyMessage* bsmPt2 = new CustomBasicSafetyMessage();
         populateWSM(bsmPt2);

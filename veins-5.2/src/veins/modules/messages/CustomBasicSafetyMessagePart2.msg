@@ -1,9 +1,8 @@
-cplusplus {{
-#include "veins/base/utils/Coord.h"
-}}
+import veins.base.utils.Coord;
+import veins.modules.messages.BaseFrame1609_4;
+import veins.base.utils.SimpleAddress;
 
-class WaveShortMessage;
-class noncobject Coord;
+namespace veins;
 
 packet CustomBasicSafetyMessagePart2 {
 	//Version of the Wave Short Message

@@ -1,11 +1,16 @@
-#ifndef NormalAppLayer_Secure_H
-#define NormalAppLayer_Secure_H
+#pragma once
 
-#include "veins/modules/application/ieee80211p/BaseWaveApplLayer.h"
+#include "veins/veins.h"
+
+#include "veins/modules/application/ieee80211p/DemoBaseApplLayer.h"
 #include "veins/base/utils/Coord.h"
 #include <algorithm>
 
-class NormalAppLayer_Secure : public BaseWaveApplLayer {
+using namespace omnetpp;
+
+namespace veins {
+
+class VEINS_API NormalAppLayer_Secure : public DemoBaseApplLayer {
     struct neighbor {
         simtime_t lastUpdate;
         Coord position;
@@ -25,8 +30,8 @@ class NormalAppLayer_Secure : public BaseWaveApplLayer {
 
         std::vector<neighbor> neighborsList;
 	protected:
-		virtual void onBSM(BasicSafetyMessage* bsm);
-        virtual void onWSM(WaveShortMessage* wsm);
+		virtual void onBSM(DemoSafetyMessage* bsm);
+        virtual void onWSM(BaseFrame1609_4* wsm);
 
         virtual void handleSelfMsg(cMessage* msg);
 
@@ -41,4 +46,4 @@ class NormalAppLayer_Secure : public BaseWaveApplLayer {
         double verifyDelay;
 };
 
-#endif
+}

@@ -19,10 +19,10 @@
 //
 
 package org.car2x.veins.modules.application.traci;
-import org.car2x.veins.modules.application.ieee80211p.BaseWaveApplLayer;
+import org.car2x.veins.modules.application.ieee80211p.DemoBaseApplLayer;
 
-simple AttackerAppLayer extends BaseWaveApplLayer
+simple AttackerAppLayer extends DemoBaseApplLayer
 {
-    @class(AttackerAppLayer);
+    @class(veins::AttackerAppLayer);
     @display("i=block/app2");
 }
