@@ -1,5 +1,3 @@
-package secure_inter_vehicle_communication_scenario3.simulations;
-
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -15,8 +13,10 @@ package secure_inter_vehicle_communication_scenario3.simulations;
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 //
 import org.car2x.veins.nodes.Scenario;
+package secure_inter_vehicle_communication_scenario3.simulations;
+
 
 network HighwayScenario3 extends Scenario
 {
-    
+    @display("bgl=2");
 }

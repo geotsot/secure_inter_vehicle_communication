@@ -6,7 +6,7 @@
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="netconvertConfiguration.xsd">
 
     <output>
-        <output-file value="C:\Users\user\highway.rou.xml"/>
+        <output-file value="highway.rou.xml"/>
     </output>
 
     <processing>

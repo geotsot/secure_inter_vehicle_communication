@@ -6,3 +6,5 @@ samples/**/**/.tkenvrc
 samples/**/**/.qtenvrc
 samples/**/**/.cmdenv-log
 samples/**/**/valgrind.out
+samples/**/**/*.anf
+samples/**/.settings
