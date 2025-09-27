@@ -1,0 +1,8 @@
+samples/**/**/OLD-results
+samples/**/**/results
+samples/**/**/results-final
+samples/**/**/results-run
+samples/**/**/.tkenvrc
+samples/**/**/.qtenvrc
+samples/**/**/.cmdenv-log
+samples/**/**/valgrind.out
